@@ -3,7 +3,7 @@ import config from '@/config/index';
 import { useLayout } from '@/layout/composables/layout';
 import { useBankaccountStore } from '@/stores/modules/Bankaccount';
 import { useFundtransferStore } from '@/stores/modules/Fundtransfer';
-import { useMerchantInfoStore } from '@/stores/modules/Merchantinfo';
+import { useMerchantInfoStore } from '@/stores/modules/MerchantInfo';
 import { useOwnerDetailsStore } from '@/stores/modules/OwnerDetails';
 import { storeToRefs } from 'pinia';
 import { useToast } from 'primevue/usetoast';
