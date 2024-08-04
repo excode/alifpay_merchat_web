@@ -62,15 +62,7 @@
                 name: 'ownerDetails.details',
                 component: () => import('@/views/secure/ownerDetails/details.vue')
             }
-            ,
-
            
-
-            {
-                path: '/secure/ownerDetails/master',
-                name: 'ownerDetails.master',
-                component: () => import('@/views/secure/ownerDetails/master.vue')
-            }
     ]
     export default customRoutes;
             
