@@ -82,20 +82,13 @@ const isOutsideClicked = (event) => {
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <span className="p-link layout-topbar-button">
-                {{ userInfo.firstname }}
+                {{ userInfo.name }}
             </span>
             <button @click="logOut()" class="p-link layout-topbar-button">
                 <i class="pi pi-sign-out"></i>
                 <span>Logout</span>
             </button>
-            <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-                <i class="pi pi-user"></i>
-                <span>Profile</span>
-            </button>
-            <button @click="onSettingsClick()" class="p-link layout-topbar-button">
-                <i class="pi pi-cog"></i>
-                <span>Settings</span>
-            </button>
+           
         </div>
     </div>
 </template>
