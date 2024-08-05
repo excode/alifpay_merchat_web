@@ -56,10 +56,19 @@ const submit=async()=>{
                         </div>
                         <Button :loading="loading"  label="Sign In" class="w-full p-3 text-xl" @click="submit"></Button>
                     </div>
+                   
                 </div>
+               
             </div>
+            <Panel header="Attention">
+                <p class="m-0">
+                    You need to enable your account as a merchant to access this section. 
+
+                </p>
+            </Panel>
         </div>
     </div>
+   
     <AppConfig simple />
 </template>
 

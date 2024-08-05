@@ -168,7 +168,8 @@ watch(
                        <ProgressSpinner />
                     </div>
                    <div v-else>
-                    <Button label="Submit Application" icon="pi pi-check" @click="sendApplication2" />
+                    <p>After providing all the information about your business, partner, and bank, please click the button below. It will create your merchant details and send them to your email. Which email can be used to finalize your merchant application</p>
+                    <Button label="Create Application" icon="pi pi-check" @click="sendApplication2" />
                    </div>
             
                

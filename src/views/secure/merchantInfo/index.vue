@@ -447,7 +447,15 @@ const getNewData =async(e,type=0)=>{
                                 </template>
                             </Column>
                         </DataTable>
+
                         <simple-pagination :currentpage="page" :pages="totalpages" @changePage="pageChange"></simple-pagination>
+                        <Panel header="Attention">
+                            <p class="m-0">
+                                please click the right-most blue button. It will forward you to the details page, where you can upload all relevant documents required for your merchant application
+                            </p>
+                        </Panel>
+                              
+                      
                         <Dialog v-model:visible="merchantInfoDialog" :style="{ width: '450px' }" header="MerchantInfo Details" :modal="true" class="p-fluid">
                             
                             
