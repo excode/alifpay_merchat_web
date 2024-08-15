@@ -53,6 +53,7 @@ const validation=[
 {id:'email',type:validate.email,max:0,min:0,required:true},
 {id:'street',type:validate.text,max:0,min:0,required:true},
 {id:'address',type:validate.text,max:0,min:0,required:true},
+{id:'introducer',type:validate.text,max:0,min:0,required:true},
 {id:'city',type:validate.text,max:0,min:0,required:true},
 {id:'state',type:validate.text,required:true},
 {id:'postcode',type:validate.text,max:0,min:0,required:true},
@@ -82,6 +83,7 @@ street:'',
 address:'',
 city:'',
 state:null,
+introducer:'',
 postcode:'',
 country:null,
 avgtransaction:0,
@@ -316,7 +318,17 @@ const getNewData =async(e,type=0)=>{
         
                             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                             
-          
+                            <Column field="introducer"  header="Introducer" :showAddButton="false"  filterField="introducer"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                                <template #body="slotProps">
+                                    <span class="p-column-title">Introducer</span>
+                                    {{slotProps.data.introducer}}
+                                </template>
+                                <template #filter="{ filterModel }">
+                                
+                                     <InputText v-model="filterModel.value" class="p-column-filter" placeholder="Search by introducer" />
+                                            
+                                </template>
+                            </Column>      
          
 <Column field="contactperson"  header="Contact Person" :showAddButton="false"  filterField="contactperson"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
@@ -457,7 +469,10 @@ const getNewData =async(e,type=0)=>{
                               
                       
                         <Dialog v-model:visible="merchantInfoDialog" :style="{ width: '450px' }" header="MerchantInfo Details" :modal="true" class="p-fluid">
-                            
+                            <div class="field">
+                                <label htmlFor="introducer">Introducer (Not editable)</label>
+                                 <InputText id="introducer" type="text" v-model="merchantInfo.introducer"  autoFocus  required :class="{ 'p-invalid': submitted && !merchantInfo.introducer }" />
+                            </div>                       
                             
     <div class="field">
         <label htmlFor="contactperson">Contact Person</label>
