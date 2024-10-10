@@ -1,6 +1,6 @@
 
 export default {
-serverURI:'http://localhost:8080',
+serverURI:'https://alifpaymerchant-cuf6fvekhngcbmd9.southeastasia-01.azurewebsites.net',
 serverURIRef:'https://wallet-uat.alifpay.com.my',
 refServerURI: 'https://winmarchant.azurewebsites.net',
 title:'AlifPay Cashback',
@@ -9,3 +9,4 @@ hideLogoOnMobile: false,
 multiLanguageSupport:false,
 jwt_secret: "654321"
 }
+//https://winmarchant.azurewebsites.net
