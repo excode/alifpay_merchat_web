@@ -1,15 +1,7 @@
-import axios from 'axios'
-import config from '@/config'
-import VueJwtDecode from 'vue-jwt-decode'
+import config from '@/config';
+import axios from 'axios';
 
-function setLogin(){
-  var  u=`{
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDU5YmQxNTBlMmY4ODI1NjBhZTJkZjYiLCJlbWFpbCI6InRlc3RAdWNvZGUuYWkiLCJwZXJtaXNzaW9uTGV2ZWwiOjQsIm5hbWUiOiJ1Q29kZSBUZXN0Iiwid2ViQWNjZXNzIjowLCJyZWZyZXNoS2V5IjoiMnFtbXJJL3F5ZUE1QXNrYUMvaGRrQT09IiwiaWF0IjoxNjg0NzQxNDk3fQ.qNTN1C_Q5qTMXQn0WDXJ70S3sl0f7jKh4cqlQfX8XOY",
-    "email":"kazad79@gmail.com",
-    "name":"Kalam Azad"
-  }`
-  localStorage.setItem('users',u)
-}
+const project_code="66efa1fcfb844876e472f02b"
 export const getData = async(path,request={},secured=true,_url="") => {
        //setLogin();
       const url=_url==""?config.serverURI + path:_url + path
@@ -17,6 +9,9 @@ export const getData = async(path,request={},secured=true,_url="") => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       };
+      if(_url!=""){
+        headers["project_code"] =project_code;
+      }
       if(secured){
         const ldata = localStorage.getItem('users')
         console.log(ldata);
@@ -52,7 +47,11 @@ export const postData = async(path,postdata,secured=true,_url="") => {
     const url=_url==""?config.serverURI + path:_url + path
     let headers={
       'Content-Type': 'application/json'
+      
     };
+    if(_url!=""){
+      headers["project_code"] =project_code;
+    }
     if(secured){
       const ldata = localStorage.getItem('users')
       if ( ldata == null ) return [];
@@ -84,7 +83,11 @@ export const patchData = async(path,postdata,secured=true,_url="") => {
     const url=_url==""?config.serverURI + path:_url + path
     let headers={
       'Content-Type': 'application/json'
+      
     };
+    if(_url!=""){
+      headers["project_code"] =project_code;
+    }
     if(secured){
       const ldata = localStorage.getItem('users')
       if ( ldata == null ) return [];
@@ -122,6 +125,9 @@ export const deleteData = async(path,_url="") => {
         'Content-Type': 'application/json',
         "Authorization":'Bearer ' + token
       };
+      if(_url!=""){
+        headers["project_code"] =project_code;
+      }
       headers["Authorization"] ='Bearer ' + token;
     try {
     const response = await axios.delete(url, {

@@ -1,28 +1,24 @@
 <script setup>
-import config from '@/config/index';
 import { useLayout } from '@/layout/composables/layout';
 import { useBankaccountStore } from '@/stores/modules/Bankaccount';
 import { useFundtransferStore } from '@/stores/modules/Fundtransfer';
-import { useMerchantInfoStore } from '@/stores/modules/MerchantInfo';
-import { useOwnerDetailsStore } from '@/stores/modules/OwnerDetails';
+import { useHierarchyStore } from '@/stores/modules/Hierarchy';
+//import { useOwnerDetailsStore } from '@/stores/modules/OwnerDetails';
 import { storeToRefs } from 'pinia';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, watch } from 'vue';
 const { isDarkTheme } = useLayout();
 const { bankaccounts} = storeToRefs(useBankaccountStore())
-const { curdLoading,error} = storeToRefs(useMerchantInfoStore())
+const { loading,error,hierarchys} = storeToRefs(useHierarchyStore())
     const {  
         getBankaccount
    
     } = useBankaccountStore()
-    const {  
-        sendApplication
    
-    } = useMerchantInfoStore()
-    const { ownerDetailss} = storeToRefs(useOwnerDetailsStore())
+   
     const {  
-    getOwnerDetails,
-    } = useOwnerDetailsStore()
+        getHierarchyAll
+    } = useHierarchyStore()
     const { summary} = storeToRefs(useFundtransferStore())
     const {  
         getFundtransferSummary
@@ -32,7 +28,7 @@ const { curdLoading,error} = storeToRefs(useMerchantInfoStore())
     const toast = useToast();
 onMounted(async() => {
     await getBankaccount();
-    await getOwnerDetails();
+    await getHierarchyAll();
     await getFundtransferSummary()
 });
 
@@ -81,8 +77,8 @@ watch(
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Owners</span>
-                        <div class="text-900 font-medium text-xl">{{ownerDetailss.length}}</div>
+                        <span class="block text-500 font-medium mb-3">Wallets</span>
+                        <div class="text-900 font-medium text-xl">{{hierarchys.length}}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-map-marker text-orange-500 text-xl"></i>
@@ -149,28 +145,23 @@ watch(
             <div class="card">
                 
                    
-                    <DataTable :value="ownerDetailss" :rows="5" :paginator="true" responsiveLayout="scroll">
+                    <DataTable :value="hierarchys" :rows="5" :paginator="true" responsiveLayout="scroll">
                         <Column style="width: 15%">
-                            <template #header>IC</template>
+                            <template #header>Product</template>
                             <template #body="slotProps">
-                                <img :src="config.serverURI+'/'+slotProps.data.icfrontimage" :alt="slotProps.data.name" width="50" class="shadow-2" />
+                               {{ slotProps.data.productid.productname }}
                             </template>
                         </Column>
-                        <Column field="name" header="Name" :sortable="true" style="width: 35%"></Column>
-                        <Column field="email" header="Email" :sortable="true" style="width: 35%">
+                        <Column field="contactNumber" header="User Name" :sortable="true" style="width: 35%"></Column>
+                        <Column field="introducer" header="Introducer" :sortable="true" style="width: 35%">
                             
                         </Column>
-                        <Column style="width: 15%" field="contactnumber"  header="Mobile">
+                        <Column style="width: 15%" field="rewardbalance"  header="Reward Balance">
                             
                         </Column>
                     </DataTable>
-                    <div v-if="curdLoading">
-                       <ProgressSpinner />
-                    </div>
-                   <div v-else>
-                    <p>After providing all the information about your business, partner, and bank, please click the button below. It will create your merchant details and send them to your email. Which email can be used to finalize your merchant application</p>
-                    <Button label="Create Application" icon="pi pi-check" @click="sendApplication2" />
-                   </div>
+                    
+                  
             
                
             </div>
