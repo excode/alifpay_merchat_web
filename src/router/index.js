@@ -40,11 +40,7 @@ const router = createRouter({
             name: 'login',
             component: () => import('@/views/pages/auth/Login.vue')
         },
-        {
-            path: '/auth/register',
-            name: 'register',
-            component: () => import('@/views/pages/auth/Register.vue')
-        },
+       
         {
             path: '/auth/otp',
             name: 'otp',
