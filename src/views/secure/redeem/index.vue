@@ -343,7 +343,13 @@ const getNewData =async(e,type=0)=>{
     
 </Column>  
 
-          
+<Column field="processed"  dataType="boolean" header="Processed" :showAddButton="false"    :sortable="true" headerStyle="width:14%; min-width:10rem;">
+    <template #body="slotProps">
+        <span class="p-column-title">Processed</span>
+        {{slotProps.data.processed?"Completed":"Pending"}}
+    </template>
+    
+</Column>              
          
 
             

@@ -60,12 +60,7 @@ const submit=async()=>{
                 </div>
                
             </div>
-            <Panel header="Attention">
-                <p class="m-0">
-                
-
-                </p>
-            </Panel>
+           
         </div>
     </div>
    

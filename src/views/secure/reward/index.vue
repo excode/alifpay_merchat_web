@@ -368,12 +368,7 @@ const getNewData =async(e,type=0)=>{
         <span class="p-column-title">Status</span>
         {{slotProps.data.status}}
     </template>
-    <template #filter="{ filterModel }">
     
-<Calendar v-model="filterModel.value"  showTime hourFormat="12" />
-
-            
-    </template>
 </Column>         
 
           
