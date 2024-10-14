@@ -62,7 +62,7 @@ const submit=async()=>{
             </div>
             <Panel header="Attention">
                 <p class="m-0">
-                    You need to enable your account as a merchant to access this section. 
+                
 
                 </p>
             </Panel>

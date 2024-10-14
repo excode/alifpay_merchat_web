@@ -1,6 +1,6 @@
 import { listError } from '@/lib/functions'
-  import {getData,postData,deleteData,patchData} from '@/lib/httpRequest'
-  import { defineStore } from 'pinia'
+import { deleteData, getData, patchData, postData } from '@/lib/httpRequest'
+import { defineStore } from 'pinia'
   export const useBankStore = defineStore('Bank', {
     state:() => ({
       banks: [],
@@ -139,6 +139,10 @@ import { listError } from '@/lib/functions'
               this.loading = false
               this.curdLoading = false
             }
+          },
+           getBankLogo(bankid){
+            const bank = this.banks.find(b=>b.bank_id==bankid);
+            return bank?.bank_logo_url;
           }
       },
    

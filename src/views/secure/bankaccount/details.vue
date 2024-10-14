@@ -1,6 +1,7 @@
 
 <script setup>
 import config from '@/config/index';
+import { useBankStore } from '@/stores/modules/Bank';
 import { useBankaccountStore } from '@/stores/modules/Bankaccount';
 import { useLoginStore } from '@/stores/modules/Login';
 import { storeToRefs } from 'pinia';
@@ -18,6 +19,9 @@ const {
 const uploadDialog = ref(false);
 const currentImage = ref('');
 const uploadInfo = ref(null);
+const {  
+getBankLogo
+} = useBankStore()
 onMounted(async() => {
 const route = useRoute();  
 const id = route.params.id; // read parameter id (it is reactive) 
@@ -63,7 +67,7 @@ const updateFileName = (newUploadedFileName,colName) => {
         <div class="font-medium text-3xl text-900 mb-3"></div>
         
     <div className="card flex justify-content-center">
-        <img v-if="bankaccount.bank_logo_url!=undefined" :src="bankaccount.bank_logo_url" :alt="bankaccount.bank_name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
+        <img v-if="bankaccount.bank_id!=undefined" :src="getBankLogo(bankaccount.bank_id)" :alt="bankaccount.bank_name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
     </div>
 
     <Image v-if="bankaccount.doc!='' && bankaccount.doc!=undefined && bankaccount.doc.match(/.(jpg|jpeg|png|gif)$/i)" preview  alt="Image" width="250"  :src="config.serverURI+'/' + bankaccount.doc">

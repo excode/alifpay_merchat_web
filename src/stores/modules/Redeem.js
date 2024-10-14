@@ -94,7 +94,7 @@ import { defineStore } from 'pinia'
           },
           async addRedeem (request = {}) {
             this.curdLoading =true 
-            const response = await  postData( '/redeem', request ,true,config.refServerURI)
+            const response = await  postData( '/redeem/alifpay', request ,true,config.refServerURI)
             if(response["errors"]==undefined || response["errors"]==null) {
                 var newID= response.id
                 this.redeems.unshift({...request,id:newID,_id:newID})

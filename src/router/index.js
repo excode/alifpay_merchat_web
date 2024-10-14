@@ -8,6 +8,12 @@ const router = createRouter({
         {
             path: '/',
             component: AppLayout,
+            redirect: to => {
+                const userData = localStorage.getItem('users');
+                const authInfo = userData ? JSON.parse(userData) : {};
+                // If user is already logged in, redirect to /secure, otherwise to /auth/login
+                return authInfo.token ? '/secure' : '/auth/login';
+            },
             name: 'landing',
             children: [
                 {

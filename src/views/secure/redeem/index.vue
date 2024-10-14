@@ -7,7 +7,6 @@ import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
 import { onBeforeMount, onMounted, ref } from 'vue';
 //import { useProductStore } from '@/stores/modules/Product';
-//import { useRedeemoptionStore } from '@/stores/modules/Redeemoption';
 import { validate, validateForm } from '@/lib/validation';
     const { redeems, error,curdLoading, loading,totalpages,page,totalRecords} = storeToRefs(useRedeemStore())
     const {  
@@ -38,12 +37,12 @@ const row = ref(10);
                 
 // THE VALIDATION RULES
 const validation=[
-    {id:'productid',type:validate.text,required:true},
-{id:'redeemproductid',type:validate.text,required:true},
+//{id:'productid',type:validate.text,required:true},
+//{id:'redeemproductid',type:validate.text,required:true},
 {id:'quantity',type:validate.number,max:0,min:0,required:true},
-{id:'unitprice',type:validate.number,max:0,min:0,required:true},
-{id:'total',type:validate.number,max:0,min:0,required:true},
-{id:'sellerNumber',type:validate.phone,max:0,min:0,required:true}
+//{id:'unitprice',type:validate.number,max:0,min:0,required:true},
+//{id:'total',type:validate.number,max:0,min:0,required:true},
+//{id:'sellerNumber',type:validate.phone,max:0,min:0,required:true}
 ]
 onBeforeMount(() => {
     initFilters();
@@ -58,11 +57,11 @@ onMounted(async() => {
 const openNew = () => {
     let emptyRedeem = {
         productid:null,
-redeemproductid:null,
-quantity:0,
-unitprice:0,
-total:0,
-sellerNumber:''
+        redeemproductid:null,
+        quantity:0,
+        unitprice:1,
+        total:1,
+        sellerNumber:'ss'
     };
     redeem.value = emptyRedeem;
     submitted.value = false;
@@ -157,11 +156,11 @@ const initFilters = () => {
     filters.value = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         productid: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-redeemproductid: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-quantity: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-unitprice: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-total: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-sellerNumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
+        redeemproductid: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        quantity: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        unitprice: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        total: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        sellerNumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
     };
 };
 const getNewData =async(e,type=0)=>{
@@ -263,7 +262,7 @@ const getNewData =async(e,type=0)=>{
 <Column field="productid"   header="Product" :showAddButton="false"  filterField="productid"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Product</span>
-        {{slotProps.data.productid}}
+        {{slotProps.data.productid.productname}}
     </template>
     <template #filter="{ filterModel }">
     
@@ -276,10 +275,10 @@ const getNewData =async(e,type=0)=>{
 
           
          
-<Column field="redeemproductid"   header="Redeemproductid" :showAddButton="false"  filterField="redeemproductid"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
+<Column field="redeemproductid"   header="Redeem Product" :showAddButton="false"  filterField="redeemproductid"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
-        <span class="p-column-title">Redeemproductid</span>
-        {{slotProps.data.redeemproductid}}
+        <span class="p-column-title">Redeem Product</span>
+        {{slotProps.data.redeemproductid.name}}
     </template>
     <template #filter="{ filterModel }">
     
@@ -310,7 +309,7 @@ const getNewData =async(e,type=0)=>{
          
 <Column field="unitprice"  dataType="numeric" header="Unitprice" :showAddButton="false"  filterField="unitprice"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
-        <span class="p-column-title">Unitprice</span>
+        <span class="p-column-title">Unit price</span>
         {{slotProps.data.unitprice}}
     </template>
     <template #filter="{ filterModel }">
@@ -336,70 +335,37 @@ const getNewData =async(e,type=0)=>{
     </template>
 </Column>
             
-            
+<Column field="createAt"  dataType="date" header="Date & time" :showAddButton="false" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+    <template #body="slotProps">
+        <span class="p-column-title">Create At</span>
+        {{slotProps.data.createAt}}
+    </template>
+    
+</Column>  
 
           
          
-<Column field="sellerNumber"  header="Seller Number" :showAddButton="false"  filterField="sellerNumber"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
-    <template #body="slotProps">
-        <span class="p-column-title">Seller Number</span>
-        {{slotProps.data.sellerNumber}}
-    </template>
-    <template #filter="{ filterModel }">
-    
-         <InputText v-model="filterModel.value" class="p-column-filter" placeholder="Search by SellerNumber" />
-                
-    </template>
-</Column>
+
             
             
                             
-                            <Column headerStyle="min-width:10rem;">
-                                <template #body="slotProps">
-                                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editRedeem(slotProps.data)" />
-                                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="confirmDeleteRedeem(slotProps.data)" />
-                                    <Button icon="pi pi-list" class="p-button-rounded p-button-info mt-2" @click="$router.push('/secure/redeem/'+slotProps.data.id)"></Button>
-                                </template>
-                            </Column>
+                            
                         </DataTable>
                         <simple-pagination :currentpage="page" :pages="totalpages" @changePage="pageChange"></simple-pagination>
-                        <Dialog v-model:visible="redeemDialog" :style="{ width: '450px' }" header="Redeem Details" :modal="true" class="p-fluid">
+                        <Dialog v-model:visible="redeemDialog" :style="{ width: '450px' }" header="Redeem to AlifPay Wallet" :modal="true" class="p-fluid">
                             
                             
+   
     <div class="field">
-        <label htmlFor="productid">Product</label>
-         <Dropdown   id="productid"  optionLabel="productname" optionValue="id"  v-model="redeem.productid" :options="products"   />
+        <label htmlFor="quantity">Amount to Redeem</label>
+         <InputNumber id="quantity" v-model="redeem.quantity"   mode="currency" currency="MYR"  />
     </div>
             
 
-    <div class="field">
-        <label htmlFor="redeemproductid">Redeemproductid</label>
-         <Dropdown   id="redeemproductid"  optionLabel="name" optionValue="id"  v-model="redeem.redeemproductid" :options="redeemoptions"   />
-    </div>
+    
             
 
-    <div class="field">
-        <label htmlFor="quantity">Quantity</label>
-         <InputNumber id="quantity" v-model="redeem.quantity"   mode="currency" currency="USD"  />
-    </div>
-            
-
-    <div class="field">
-        <label htmlFor="unitprice">Unitprice</label>
-         <InputNumber id="unitprice" v-model="redeem.unitprice"   mode="currency" currency="USD"  />
-    </div>
-            
-
-    <div class="field">
-        <label htmlFor="total">Total</label>
-         <InputNumber id="total" v-model="redeem.total"   mode="currency" currency="USD"  />
-    </div>
-            
-
-    <div class="field">
-        <label htmlFor="sellerNumber">Seller Number</label>
-         <InputText id="sellerNumber" type="text" v-model="redeem.sellerNumber"  autoFocus  required :class="{ 'p-invalid': submitted && !redeem.sellerNumber }" />
-    </div>
+    
             
                             <template #footer>
                                 <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />

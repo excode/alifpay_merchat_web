@@ -33,7 +33,7 @@ const row = ref(10);
 
 const { banks} = storeToRefs(useBankStore())
 const {  
-getBankAll
+getBankAll,getBankLogo
 } = useBankStore()
                 
 // THE VALIDATION RULES
@@ -210,11 +210,13 @@ const getNewData =async(e,type=0)=>{
         await getBankaccount(searchObj);
 }     
        
-
+   
     const acctype_ids =[
 	{value:"1",name:"Saving"},
 	{value:"2",name:"Current"}
 ]
+
+
                 
         </script>
         
@@ -273,8 +275,8 @@ const getNewData =async(e,type=0)=>{
     <Column field="bank_logo_url"  header="Bank Logo" :showAddButton="false"  filterField="bank_logo_url"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
         <template #body="slotProps">
             <span class="p-column-title">Bank Logo</span>
-            
-            <img v-if="slotProps.data.bank_logo_url!=undefined" :src="slotProps.data.bank_logo_url" :alt="slotProps.data.bank_name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
+           
+            <img v-if="slotProps.data.bank_id!=undefined" :src="getBankLogo(slotProps.data.bank_id)" :alt="slotProps.data.bank_name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
         </template>
        
     </Column>         
