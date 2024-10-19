@@ -15,7 +15,7 @@ export const getData = async(path,request={},secured=true,_url="") => {
       }
       if(secured){
         const ldata = localStorage.getItem('users')
-        console.log(url);
+      //  console.log(url);
         //console.log(ldata);
         if ( ldata == null ) return [];
         const data = JSON.parse( ldata )
