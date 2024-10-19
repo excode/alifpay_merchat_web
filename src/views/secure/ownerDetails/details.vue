@@ -1,15 +1,12 @@
 
 <script setup>
-import { storeToRefs } from 'pinia'
+import config from '@/config/index';
+import { remittanceOpt } from '@/lib/remittanceOpt';
+import { useLoginStore } from '@/stores/modules/Login';
+import { useOwnerDetailsStore } from '@/stores/modules/OwnerDetails';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import {ref, onMounted } from 'vue';
-import config from '@/config/index'
-import moment from 'moment'
-import { convertArray } from '@/lib/functions';
-import { useOwnerDetailsStore } from '@/stores/modules/OwnerDetails'
-
-import { useLoginStore } from '@/stores/modules/Login'            
-
 const { ownerDetails, error,loading} = storeToRefs(useOwnerDetailsStore())
 const {  
 getOwnerDetailsDetails
@@ -41,7 +38,7 @@ await getOwnerDetailsDetails(id)
     };
     const downloadFile=(e,data,dbColName) => {
         e.stopPropagation();
-        let fileLink = config.serverURI+"/"+data[dbColName];
+        let fileLink = config.serverURIMer+"/"+data[dbColName];
         var link=document.createElement('a');
         document.body.appendChild(link);
         link.href=fileLink ;
@@ -52,7 +49,7 @@ await getOwnerDetailsDetails(id)
     const showUploadDialog = (e,data,dbColName,accept="image/*") => {
         e.stopPropagation();
         ownerDetails.value={ ...data };
-        let uploadData =  {url:config.serverURI,dbColName:dbColName,accept:accept}
+        let uploadData =  {url:config.serverURIMer,dbColName:dbColName,accept:accept}
         uploadInfo.value = uploadData;
         uploadDialog.value = true;
         
@@ -77,35 +74,35 @@ await getOwnerDetailsDetails(id)
     <div className="card flex justify-content-center">
         
         <div>
-        <Image v-if="ownerDetails.icfrontimage!='' && ownerDetails.icfrontimage!=undefined" preview  alt="Image" width="250"  :src="config.serverURI+'/' + ownerDetails.icfrontimage">
+        <Image v-if="ownerDetails.icFrontImage!='' && ownerDetails.icFrontImage!=undefined" preview  alt="Image" width="250"  :src="config.serverURIMer+'/' + ownerDetails.icFrontImage">
             <template #indicatoricon>
                 
                 <Button  icon="pi pi-eye" class="p-button-rounded p-button-warning mr-2"  />
             
-                <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icfrontimage')" />
+                <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icFrontImage')" />
             </template>
         </Image>
         
         <Image v-else   alt="Image" width="250" preview  src="/photo_na.png">
                <template #indicatoricon>
-                   <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icfrontimage')" />
+                   <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icFrontImage')" />
                </template>
         </Image>
         </div>
             
         <div>
-        <Image v-if="ownerDetails.icbackimage!='' && ownerDetails.icbackimage!=undefined" preview  alt="Image" width="250"  :src="config.serverURI+'/' + ownerDetails.icbackimage">
+        <Image v-if="ownerDetails.icBackImage!='' && ownerDetails.icBackImage!=undefined" preview  alt="Image" width="250"  :src="config.serverURIMer+'/' + ownerDetails.icBackImage">
             <template #indicatoricon>
                 
                 <Button  icon="pi pi-eye" class="p-button-rounded p-button-warning mr-2"  />
             
-                <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icbackimage')" />
+                <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icBackImage')" />
             </template>
         </Image>
         
         <Image v-else   alt="Image" width="250" preview  src="/photo_na.png">
                <template #indicatoricon>
-                   <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icbackimage')" />
+                   <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,ownerDetails,'icBackImage')" />
                </template>
         </Image>
         </div>
@@ -122,22 +119,71 @@ await getOwnerDetailsDetails(id)
   
                 
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
-        <div className="text-500 w-6 md:w-2 font-medium">Contact Number</div>
-        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.contactnumber}}</div>
+        <div className="text-500 w-6 md:w-2 font-medium">IC No</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.icNo}}</div>
         
     </li>       
   
                 
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
-        <div className="text-500 w-6 md:w-2 font-medium">Email</div>
+        <div className="text-500 w-6 md:w-2 font-medium">Contact Number</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.contactNumber}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Email address</div>
         <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.email}}</div>
         
     </li>       
   
                 
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
-        <div className="text-500 w-6 md:w-2 font-medium">IC no</div>
-        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.icno}}</div>
+        <div className="text-500 w-6 md:w-2 font-medium">Remittance Method</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ ownerDetails.remittanceMethod }}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Alifpay Username</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.alifpayUsername}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Remittance Agreement</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{remittanceOpt.find(r=>r.id==ownerDetails.remittanceAgreement)?.value}}||{{ownerDetails.remittanceAgreement}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Bank Name</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.bankName}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Bank Account</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.bankAccount}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Active</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.active}}</div>
+        
+    </li>       
+  
+                
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Approved</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{ownerDetails.approved}}</div>
         
     </li>       
   

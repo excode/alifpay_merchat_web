@@ -4,6 +4,7 @@ import axios from 'axios';
 const project_code="66efa1fcfb844876e472f02b"
 export const getData = async(path,request={},secured=true,_url="") => {
        //setLogin();
+      //console.log(config)
       const url=_url==""?config.serverURI + path:_url + path
       let headers={
         'Accept': 'application/json',
@@ -14,7 +15,8 @@ export const getData = async(path,request={},secured=true,_url="") => {
       }
       if(secured){
         const ldata = localStorage.getItem('users')
-        console.log(ldata);
+        console.log(url);
+        //console.log(ldata);
         if ( ldata == null ) return [];
         const data = JSON.parse( ldata )
         const token = data.token
@@ -43,6 +45,8 @@ export const getData = async(path,request={},secured=true,_url="") => {
 };
 
 export const postData = async(path,postdata,secured=true,_url="") => {
+ 
+ 
   //setLogin();
     const url=_url==""?config.serverURI + path:_url + path
     let headers={

@@ -20,10 +20,11 @@ function maskEmail(email) {
       
       actions: {
         async login(request = {}) {
+            
             this.loading =true 
             request={...request,"_x":"0"}
             const response = await postData( '/auth',request,false);
-            //console.log(request)
+            console.log(request)
             if(response["errors"]==undefined || response["errors"]==null) {
               console.log(response)
               localStorage.setItem('preLogin', JSON.stringify(response ))
@@ -58,7 +59,8 @@ function maskEmail(email) {
                 userId: decode.userId,
                 uid: response.uid,
                 token: response.accessToken,
-                refresh: response.refreshToken
+                refresh: response.refreshToken,
+                userType:decode.userType
             }
             
             this.error = null

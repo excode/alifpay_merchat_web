@@ -242,7 +242,7 @@ const getNewData =async(e,type=0)=>{
     };
     const downloadFile=(e,data,dbColName) => {
         e.stopPropagation();
-        let fileLink = config.serverURI+"/"+data[dbColName];
+        let fileLink = config.serverURIMer+"/"+data[dbColName];
         var link=document.createElement('a');
         document.body.appendChild(link);
         link.href=fileLink ;
@@ -253,7 +253,7 @@ const getNewData =async(e,type=0)=>{
     const showUploadDialog = (e,data,dbColName,accept="image/*") => {
         e.stopPropagation();
         merchantInfo.value={ ...data };
-        let uploadData =  {url:config.serverURI,dbColName:dbColName,accept:accept}
+        let uploadData =  {url:config.serverURIMer,dbColName:dbColName,accept:accept}
         uploadInfo.value = uploadData;
         uploadDialog.value = true;
         

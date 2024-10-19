@@ -40,7 +40,7 @@ await getMerchantInfoDetails(id)
     };
     const downloadFile=(e,data,dbColName) => {
         e.stopPropagation();
-        let fileLink = config.serverURI+"/"+data[dbColName];
+        let fileLink = config.serverURIMer+"/"+data[dbColName];
         var link=document.createElement('a');
         document.body.appendChild(link);
         link.href=fileLink ;
@@ -51,7 +51,7 @@ await getMerchantInfoDetails(id)
     const showUploadDialog = (e,data,dbColName,accept="image/*") => {
         e.stopPropagation();
         merchantInfo.value={ ...data };
-        let uploadData =  {url:config.serverURI,dbColName:dbColName,accept:accept}
+        let uploadData =  {url:config.serverURIMer,dbColName:dbColName,accept:accept}
         uploadInfo.value = uploadData;
         uploadDialog.value = true;
         
@@ -78,7 +78,7 @@ await getMerchantInfoDetails(id)
             <Card>
                 <template #title>{{ file.title }}</template>
                 <template #content>
-                    <Image v-if="merchantInfo[file.field]!='' && merchantInfo[file.field]!=undefined && merchantInfo[file.field].match(/.(jpg|jpeg|png|gif)$/i)" preview  alt="Image" width="250"  :src="config.serverURI+'/' + merchantInfo[file.field]">
+                    <Image v-if="merchantInfo[file.field]!='' && merchantInfo[file.field]!=undefined && merchantInfo[file.field].match(/.(jpg|jpeg|png|gif)$/i)" preview  alt="Image" width="250"  :src="config.serverURIMer+'/' + merchantInfo[file.field]">
                         <template #indicatoricon>
                             
                             <Button  icon="pi pi-eye" class="p-button-rounded p-button-warning mr-2"  />

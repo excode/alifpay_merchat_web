@@ -104,6 +104,7 @@ import '@/assets/styles.scss';
 import BlockViewer from '@/components/BlockViewer.vue';
 import CodeHighlight from '@/components/CodeHighlight.vue';
 import CustomFileUpload from '@/components/CustomFileUpload.vue';
+
 import { createPinia } from 'pinia';
 
 const app = createApp(App);
@@ -211,5 +212,6 @@ app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
+
 app.use(pinia)
 app.mount('#app');
