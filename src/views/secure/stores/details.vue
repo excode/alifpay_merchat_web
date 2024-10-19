@@ -13,7 +13,7 @@ const {
 getStoresDetails,
 updateStores
 } = useStoresStore()
-const map_api_token='AIzaSyBs60YGsJZtaoH-1mJnFoW6-fuqjKiSb6k'
+const map_api_token=import.meta.env.VITE_MAP_API;
     const { userInfo} = storeToRefs(useLoginStore())
     const {  
         getUserInfo,
@@ -224,8 +224,9 @@ const saveStores = async() => {
     </li>    
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
     <GMapAutocomplete
+
     class="p-inputtext p-component"
-    placeholder="This is a placeholder"
+    placeholder="Search Address"
     @place_changed="setPlace"
  >
    
