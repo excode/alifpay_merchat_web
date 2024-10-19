@@ -80,7 +80,13 @@ const getUserType=(type)=>{
             <img :src="logoUrl" alt="logo" />
             <span>{{config.title}}</span>
         </router-link>
+        <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
+            <i class="pi pi-bars"></i>
+        </button>
 
+        <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
+            <i class="pi pi-ellipsis-v"></i>
+        </button>
         <Tag severity="info" :value="userInfo.name" class="mr-4"> </Tag>
     
         <Tag severity="success" :value="getUserType(userInfo.userType)" image="/images/avatar/amyelsner.png" />
