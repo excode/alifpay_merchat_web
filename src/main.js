@@ -104,6 +104,7 @@ import '@/assets/styles.scss';
 import BlockViewer from '@/components/BlockViewer.vue';
 import CodeHighlight from '@/components/CodeHighlight.vue';
 import CustomFileUpload from '@/components/CustomFileUpload.vue';
+import VueGoogleMaps from '@fawmi/vue-google-maps';
 import { createPinia } from 'pinia';
 
 const app = createApp(App);
@@ -211,5 +212,13 @@ app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
+const map_api_token=import.meta.env.VITE_MAP_API;
 app.use(pinia)
+app.use(VueGoogleMaps, {
+    load: {
+        key: map_api_token,
+        language: 'en',
+        libraries: "places"
+    },
+})
 app.mount('#app');

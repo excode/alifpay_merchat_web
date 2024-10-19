@@ -63,6 +63,15 @@ const isOutsideClicked = (event) => {
 
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
+const getUserType=(type)=>{
+    let userTypeName="BU: Basic User"
+    if(type==2){
+        userTypeName="FP: FinTech Partner"
+    }else if(type==3){
+         userTypeName="FC: FinTech Community"
+    }
+    return userTypeName;
+}
 </script>
 
 <template>
@@ -72,17 +81,13 @@ const isOutsideClicked = (event) => {
             <span>{{config.title}}</span>
         </router-link>
 
-        <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
-            <i class="pi pi-bars"></i>
-        </button>
-
-        <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
-            <i class="pi pi-ellipsis-v"></i>
-        </button>
-
+        <Tag severity="info" :value="userInfo.name" class="mr-4"> </Tag>
+    
+        <Tag severity="success" :value="getUserType(userInfo.userType)" image="/images/avatar/amyelsner.png" />
+       
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <span className="p-link layout-topbar-button">
-                {{ userInfo.name }}
+              
             </span>
             <button @click="logOut()" class="p-link layout-topbar-button">
                 <i class="pi pi-sign-out"></i>

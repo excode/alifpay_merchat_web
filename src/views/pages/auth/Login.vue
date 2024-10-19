@@ -20,6 +20,7 @@ const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
 const submit=async()=>{
+   
    await login({username:email.value,password:password.value})
     if(error.value){
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
@@ -36,13 +37,13 @@ const submit=async()=>{
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                     <div class="text-center mb-5">
                         
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome to {{config.title}}!</div>
+                        <div class="text-900 text-3xl font-medium mb-3">Welcome to  {{config.title}}!</div>
                         <span class="text-600 font-medium">Sign in to continue</span>
                     </div>
 
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
-                        <InputText id="email1" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                        <InputText id="email1" type="text" placeholder="Username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
                         <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>

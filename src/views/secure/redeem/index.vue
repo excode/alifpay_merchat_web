@@ -346,7 +346,9 @@ const getNewData =async(e,type=0)=>{
 <Column field="processed"  dataType="boolean" header="Processed" :showAddButton="false"    :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Processed</span>
-        {{slotProps.data.processed?"Completed":"Pending"}}
+       
+        <Tag v-if="slotProps.data.processed" value="Completed" severity="success" />
+        <Tag v-else value="Pending" severity="warning" />
     </template>
     
 </Column>              
