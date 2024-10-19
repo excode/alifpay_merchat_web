@@ -13,7 +13,7 @@ const {
 getStoresDetails,
 updateStores
 } = useStoresStore()
-const map_api_token=import.meta.env.VITE_MAP_API;
+const map_api_token1=import.meta.env.VITE_MAP_API;
     const { userInfo} = storeToRefs(useLoginStore())
     const {  
         getUserInfo,
@@ -236,7 +236,7 @@ const saveStores = async() => {
   <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
    
    <GoogleMap
-  :api-key="map_api_token"
+  :api-key="map_api_token1"
   style="width: 100%; height: 500px"
   :center="center"
   :zoom="15"

@@ -522,17 +522,7 @@ const getNewData =async(e,type=0)=>{
 
           
          
-<Column field="location"  header="Location" :showAddButton="false"  filterField="location"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
-    <template #body="slotProps">
-        <span class="p-column-title">Location</span>
-        {{slotProps.data.location}}
-    </template>
-    <template #filter="{ filterModel }">
-    
-         <InputText v-model="filterModel.value" class="p-column-filter" placeholder="Search by Location" />
-                
-    </template>
-</Column>
+
             
             
                             
@@ -620,16 +610,7 @@ const getNewData =async(e,type=0)=>{
    
             
 
-    <div class="field">
-        <label htmlFor="location">Location</label>
-         
-        
-  
-      <InputText pla id="locationLat" placeholder="Latitude" type="text" v-model="stores.location.coordinates[0]"  autoFocus  />
-      <InputText id="locationLong"  placeholder="Longitude" type="text" v-model="stores.location.coordinates[1]"  autoFocus  />
-     
     
-    </div>
             
 
                             <template #footer>

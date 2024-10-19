@@ -8,6 +8,7 @@ const { userInfo} = storeToRefs(useLoginStore())
 var newMenu =[
     {
         label: 'Home',
+        owner:[2,3,4],
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/secure' }]
     },
     ...menus
