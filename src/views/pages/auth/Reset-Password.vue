@@ -9,16 +9,22 @@ const { layoutConfig } = useLayout();
 const toast = useToast();
 const { loading,error,userPreInfo} = storeToRefs(useLoginStore())
 const {  
-    verifyOTP,getPreUserInfo
+    resetPassword,goLogin,getPreUserInfo
   } = useLoginStore()
 
   onMounted(() => {
     getPreUserInfo();
    
 });
-const email = ref('');
-const password = ref('');
+
 const checked = ref(false);
+const data=ref({
+    otp:"",
+    contactNumber:userPreInfo.value.contactNumber,
+    newPassword:"",
+    confirmPassword:""
+
+})
 
 const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
@@ -26,7 +32,7 @@ const logoUrl = computed(() => {
 
 const submit=async()=>{
 
-   await verifyOTP({email:userPreInfo.value.email,otp:password.value})
+   await resetPassword(data.value)
     if(error.value){
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
     }
@@ -42,31 +48,28 @@ const submit=async()=>{
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                     <div class="text-center mb-5">
                         
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome   {{userPreInfo.name}}!</div>
-                        <span class="text-600 font-medium">Please verify your OTP</span>
+                        <div class="text-900 text-3xl font-medium mb-3">Reset Password!</div>
+                    
                     </div>
 
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2"></label>
-                        <p>OTP has been sent to {{userPreInfo.masked}}</p>
-                        <label for="introducer" class="block text-900 font-medium text-xl mb-2">Introducer</label>
-                        <InputText id="introducer" type="text" placeholder="introducers" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="introducer" />
+                    
+                       
 
-                        <label for="username" class="block text-900 font-medium text-xl mb-2">Username</label>
-                        <InputText id="username" type="text" placeholder="username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="username" />
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">New Password</label>
+                        <Password id="password1" v-model="data.newPassword" placeholder="New Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>
+                       
+                        <label for="password2" class="block text-900 font-medium text-xl mb-2">Confirm Password</label>
+                        <Password id="password2" v-model="data.confirmPassword" placeholder="Confirm Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>
 
-                        <label for="name" class="block text-900 font-medium text-xl mb-2">Name</label>
-                        <InputText id="name" type="text" placeholder="full name" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="name" />
 
-                        <label for="email" class="block text-900 font-medium text-xl mb-2">Email</label>
-                        <InputText id="email" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
-
-                        <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-                        <Password id="password" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>
-
+                        <label for="password3" class="block text-900 font-medium text-xl mb-2">Reset Code</label>
+                        <Password id="password3" v-model="data.otp" placeholder="Rest Code" :toggleMask="true" class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>
+                       
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             
-                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" @click="goLogin">Already registered?</a>
                         </div>
                         <Button :loading="loading"  label="Register" class="w-full p-3 text-xl" @click="submit"></Button>
                     </div>
