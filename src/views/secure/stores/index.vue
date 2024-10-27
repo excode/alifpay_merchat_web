@@ -10,9 +10,15 @@ import { useStoresStore } from '@/stores/modules/Stores';
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
-import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+//import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
 //GOOGLE MAP         
 
+const route = useRoute();
+
+
+const pageName = ref("");
 
 const center = ref({});
 const setPlace = (place) => {
@@ -28,6 +34,18 @@ const setPlace = (place) => {
       console.log(center.value)
       */
     }
+    const pageTitle = computed(() => {
+    if(route.name=="stores"){
+        const namesToRemove = ['Community', 'Insurance', 'Marketplace'];
+            const filteredItems = businessCategorys.value.filter(item => !namesToRemove.includes(item.categoryName));
+           
+        businessCategorys.value=filteredItems
+    }
+    let val=capitalizeFirstLetter(route.name)
+   // await getStores({businessCategory:val})
+  return val;
+
+})
 const latitude = ref(0);
 const longitude = ref(0);
 const defaultLat = 3.140853; // Default latitude (San Francisco)
@@ -104,13 +122,18 @@ onBeforeMount(() => {
     initFilters();
 });
 onMounted(async() => {
-    await getStores()
+    await getStores({businessCategory:pageTitle.value})
     await getBusinessCategoryAll();
 //GET THE USER TOEKN           
     getUserInfo();
      center.value = { lat: 3.140853, lng: 101.693207 }
 
     });
+   
+    function capitalizeFirstLetter(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
    
@@ -353,7 +376,7 @@ const getNewData =async(e,type=0)=>{
         
                             <template #header>
                                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                                    <h5 class="m-0">Manage Stores</h5>
+                                    <h5 class="m-0">Manage {{pageTitle}}</h5>
                                     <span class="block mt-2 md:mt-0 p-input-icon-left">
                                         <i class="pi pi-search" />
                                         <InputText v-model="filters['global'].value" placeholder="Search..." />
@@ -398,6 +421,7 @@ const getNewData =async(e,type=0)=>{
     <template #body="slotProps">
         <span class="p-column-title">Business Name</span>
         {{slotProps.data.businessName}}
+        <Tag v-if="!slotProps.data.approved" severity="warn">Pending</Tag><Tag v-if="slotProps.data.approved" severity="success">Approved</Tag><Tag v-if="slotProps.data.approved" severity="success">Approved</Tag><Tag v-if="slotProps.data.disabled" severity="danger">disabled</Tag>
     </template>
     <template #filter="{ filterModel }">
     
@@ -426,18 +450,7 @@ const getNewData =async(e,type=0)=>{
 
           
          
-<Column field="streetName"  header="Street Name" :showAddButton="false"  filterField="streetName"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
-    <template #body="slotProps">
-        <span class="p-column-title">Street Name</span>
-        {{slotProps.data.streetName}}
-    </template>
-    <template #filter="{ filterModel }">
-    
-         <InputText v-model="filterModel.value" class="p-column-filter" placeholder="Search by StreetName" />
-                
-    </template>
-</Column>
-            
+
             
 
           
@@ -488,20 +501,7 @@ const getNewData =async(e,type=0)=>{
             
             
 
-          
-         
-<Column field="description"  header="Description" :showAddButton="false"  filterField="description"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
-    <template #body="slotProps">
-        <span class="p-column-title">Description</span>
-        {{slotProps.data.description}}
-    </template>
-    <template #filter="{ filterModel }">
-    
-            <InputText v-model="filterModel.value" class="p-column-filter" placeholder="Search by Description" />
-                   
-    </template>
-</Column>
-            
+  
             
 
           
@@ -535,14 +535,14 @@ const getNewData =async(e,type=0)=>{
                             </Column>
                         </DataTable>
                         <simple-pagination :currentpage="page" :pages="totalpages" @changePage="pageChange"></simple-pagination>
-                        <Dialog v-model:visible="storesDialog" :style="{ width: '450px' }" header="Stores Details" :modal="true" class="p-fluid">
+                        <Dialog v-model:visible="storesDialog" :style="{ width: '450px' }" :header="pageTitle+ 'Details'" :modal="true" class="p-fluid">
                             
                             
     <div class="field">
         <label htmlFor="businessName">Business Name</label>
          <InputText id="businessName" type="text" v-model="stores.businessName"  autoFocus  required :class="{ 'p-invalid': submitted && !stores.businessName }" />
     </div>
-    <div class="field">
+    <div class="field" v-if="route.name=='stores'">
         <label htmlFor="businessCategory">Business Category</label>
          <Dropdown   id="businessCategory"  optionLabel="categoryName" optionValue="categoryName"  v-model="stores.businessCategory" :options="businessCategorys"   />
     </div>    

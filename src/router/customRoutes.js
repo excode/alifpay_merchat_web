@@ -182,13 +182,32 @@
             {
                 path: '/secure/stores',
                 name: 'stores',
-                component: () => import('@/views/secure/stores/index.vue')
+                component: () => import('@/views/secure/stores/index.vue'),
+                meta: { source: 'stores' },
+                props: { key: 'stores' }
             },
+            {
+                path: '/secure/marketplace',
+                name: 'marketplace',
+                component: () => import('@/views/secure/stores/index.vue'),
+                meta: { source: 'marketplace' },
+                props: { key: 'marketplace' }
+            },
+            {
+                path: '/secure/insurance',
+                name: 'insurance',
+                component: () => import('@/views/secure/stores/index.vue'),
+                meta: { source: 'insurance' },
+                props: { key: 'insurance' }
+            },
+
             {
                 path: '/secure/stores/:id',
                 name: 'stores.details',
                 component: () => import('@/views/secure/stores/details.vue')
             }
+
+
             ,
 
             //END NEXT

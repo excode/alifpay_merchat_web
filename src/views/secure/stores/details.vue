@@ -22,7 +22,7 @@ const map_api_token1=import.meta.env.VITE_MAP_API;
     const enableSave = ref(false);
     const currentImage = ref('');
     const submitted = ref(false);
-    const center = ref({lat:3,lng:101});
+    const center = ref({lat:101,lng:3});
     const uploadInfo = ref(null);
     const toast = useToast();
     
@@ -49,7 +49,7 @@ await getStoresDetails(id)
     //GET THE USER TOEKN           
     getUserInfo()
     if(stores.value?.location?.coordinates[0]>0){
-        center.value={lat: stores.value?.location?.coordinates[0], lng: stores.value?.location?.coordinates[1]}
+        center.value={lat: stores.value?.location?.coordinates[1], lng: stores.value?.location?.coordinates[0]}
     }
     
 });
@@ -57,7 +57,7 @@ const saveStores = async() => {
            submitted.value = true;
   
 
-            let location = {type:'Point',coordinates:[center.value.lat,center.value.lng]}
+            let location = {type:'Point',coordinates:[center.value.lng,center.value.lat]}
             let updateInfo={id:stores.value.id,location:location}
             await updateStores(updateInfo);
             if(error.value==undefined || error.value==null){
