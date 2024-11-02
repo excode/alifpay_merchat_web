@@ -3,6 +3,11 @@
     const customRoutes=[
         
     
+        {
+            path: '/secure/accounts',
+            name: 'accounts',
+            component: () => import('@/views/secure/accounts/index.vue')
+        },
             {
                 path: '/secure/bankaccount',
                 name: 'bankaccount',

@@ -5,9 +5,11 @@ import { useRedeemStore } from '@/stores/modules/Redeem';
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 //import { useProductStore } from '@/stores/modules/Product';
 import { validate, validateForm } from '@/lib/validation';
+import { useHierarchyStore } from '@/stores/modules/Hierarchy';
+
     const { redeems, error,curdLoading, loading,totalpages,page,totalRecords} = storeToRefs(useRedeemStore())
     const {  
     getRedeem,
@@ -17,7 +19,7 @@ import { validate, validateForm } from '@/lib/validation';
     deleteRedeem
     } = useRedeemStore()
 
-
+const {hierarchys} = storeToRefs(useHierarchyStore())
 const toast = useToast();
 const { contextPath } = useLayout();
 const redeemDialog = ref(false);
@@ -30,7 +32,9 @@ const filters = ref({});
 const submitted = ref(false);
 const sortOrders = ref({});
 const row = ref(10);
-
+const {  
+        getHierarchyAll
+    } = useHierarchyStore()
 
                 
 
@@ -48,11 +52,22 @@ onBeforeMount(() => {
     initFilters();
 });
 onMounted(async() => {
+    await getHierarchyAll();
     await getRedeem()
+
     
 
 });
 
+const balance=computed(() => {
+    if(hierarchys.length>0){
+        console.log(hierarchys.value)
+        return hierarchys.value[0]["rewardbalance"];
+    }else{
+        return 0.00;
+    }
+
+});
 
 const openNew = () => {
     let emptyRedeem = {
@@ -214,10 +229,14 @@ const getNewData =async(e,type=0)=>{
                             <template v-slot:start>
                                 <div class="my-2">
                                     <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
-                                    
+                                   
                                 </div>
                             </template>
-        
+                            <template #center>
+                                <IconField>
+                                <h2>Available Balance for redeem:<Tag icon="pi pi-money-bill" severity="success" v-if="hierarchys.length>0">{{hierarchys[0]['rewardbalance']}}</Tag><Tag icon="pi pi-check" severity="danger" v-else>0.00</Tag></h2>
+                                </IconField>
+                            </template>
                             <template v-slot:end>
                                
                                 <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />

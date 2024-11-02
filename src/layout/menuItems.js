@@ -18,11 +18,10 @@
             owner:[2,3],
                 items: [
                 
-    
+                    { label: 'Wallet Account', icon: 'pi pi-fw pi-mobile', to: '/secure/accounts' },
                     { label: 'My Sponsor', icon: 'pi pi-fw pi-users', to: '/secure/hierarchy' },
-                  { label: 'Placement', icon: 'pi pi-fw pi-play', to: '/secure/binarary' },
+                    { label: 'Placement', icon: 'pi pi-fw pi-play', to: '/secure/binarary' },
                     { label: 'Hierarchy', icon: 'pi pi-fw pi-sliders-v', to: '/secure/referral' },
-    
                     { label: 'My Reward', icon: 'pi pi-fw pi-gift', to: '/secure/reward' },
                     { label: 'My Redeem', icon: 'pi pi-fw pi-money-bill', to: '/secure/redeem' },
                 ],
@@ -35,7 +34,7 @@
                   
                     { label: 'Products', icon: 'pi pi-fw pi-qrcode', to: '/secure/products', owner:[2] },
                    // { label: 'Products(Gallery)', icon: 'pi pi-fw pi-id-card', to: '/secure/products/dataview' },
-                   { label: 'Stores', icon: 'pi pi-fw pi-map', to: '/secure/stores', owner:[2]},
+                   { label: 'Merchant', icon: 'pi pi-fw pi-map', to: '/secure/stores', owner:[2]},
                    { label: 'Market-Place', icon: 'pi pi-fw pi-cart-plus', to: '/secure/marketplace', owner:[2]},
                    { label: 'Insurance', icon: 'pi pi-fw pi-heart-fill', to: '/secure/insurance', owner:[2]},
                    // { label: 'Stores(Gallery)', icon: 'pi pi-fw pi-id-card', to: '/secure/stores/dataview' }

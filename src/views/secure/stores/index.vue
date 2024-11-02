@@ -1,4 +1,3 @@
-
 <script setup>
 import config from '@/config/index';
 import { useLayout } from '@/layout/composables/layout';
@@ -41,7 +40,9 @@ const setPlace = (place) => {
            
         businessCategorys.value=filteredItems
     }
-    let val=capitalizeFirstLetter(route.name)
+
+    let val=route.name=="stores"?"Merchant":capitalizeFirstLetter(route.name)
+
    // await getStores({businessCategory:val})
   return val;
 
@@ -142,6 +143,9 @@ onMounted(async() => {
 
 
 const openNew = () => {
+    let cat=route.name=="marketplace"?"marketplace":""
+   // alert(cat)
+    //console.log(cat)
     let emptyStores = {
         businessName:'',
         description:'',
@@ -155,7 +159,7 @@ const openNew = () => {
         halalClassification:"",
         price:0.0,
         sharingValue:0.0,
-        businessCategory:"",
+        businessCategory:cat,
         country:null,
         location:{type:'Point',coordinates:[latitude.value,longitude.value]}
     };
@@ -535,11 +539,11 @@ const getNewData =async(e,type=0)=>{
                             </Column>
                         </DataTable>
                         <simple-pagination :currentpage="page" :pages="totalpages" @changePage="pageChange"></simple-pagination>
-                        <Dialog v-model:visible="storesDialog" :style="{ width: '450px' }" :header="pageTitle+ 'Details'" :modal="true" class="p-fluid">
+                        <Dialog v-model:visible="storesDialog" :style="{ width: '450px' }" :header="pageTitle+ ' Details'" :modal="true" class="p-fluid">
                             
                             
     <div class="field">
-        <label htmlFor="businessName">Business Name</label>
+        <label htmlFor="businessName">Business Name/Product</label>
          <InputText id="businessName" type="text" v-model="stores.businessName"  autoFocus  required :class="{ 'p-invalid': submitted && !stores.businessName }" />
     </div>
     <div class="field" v-if="route.name=='stores'">
@@ -552,7 +556,7 @@ const getNewData =async(e,type=0)=>{
         <InputText id="sharingValue" type="text" v-model="stores.sharingValue"  autoFocus  required :class="{ 'p-invalid': submitted && !stores.sharingValue }" />
     </div>    
 
-    <div class="field" v-if="stores.businessCategory=='Community' || stores.businessCategory=='Marketplace'">
+    <div class="field" v-if="route.name=='marketplace'">
         <label htmlFor="price">Price (RM)</label>
         <InputText id="price" type="text" v-model="stores.price"  autoFocus />
     </div>    
