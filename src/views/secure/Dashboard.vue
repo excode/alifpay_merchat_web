@@ -122,7 +122,7 @@ watch(
 
         <div class="col-12 xl:col-6">
             <div class="card">
-                <h5>Recent Sales</h5>
+               
                 <DataTable :value="bankaccounts" :rows="5" :paginator="true" responsiveLayout="scroll">
                     <Column style="width: 15%">
                         <template #header> Bank Logo </template>

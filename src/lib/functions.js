@@ -51,3 +51,22 @@ export const convertArray=(val)=>{
    return []
   }
 }
+
+export const formatDateReadable = (isoDate) => {
+  if (!isoDate) return '';
+
+  const date = new Date(isoDate);
+
+  // Format options for a readable date
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short',
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
