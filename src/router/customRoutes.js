@@ -133,9 +133,15 @@
                 name: 'transactionDetails.details',
                 component: () => import('@/views/secure/transactionDetails/details.vue')
             }
-           ,
-           
+            //
 
+           ,{
+                path: '/secure/mpayDocs',
+                name: 'merchantDocuments.docs',
+                component: () => import('@/views/secure/merchantDocuments/docList.vue')
+            }
+           
+,
             {
                 path: '/secure/merchantDocuments',
                 name: 'merchantDocuments',

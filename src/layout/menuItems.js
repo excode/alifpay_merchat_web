@@ -43,6 +43,7 @@
             label: "MPay Merchant ",
             owner:[2],
             items: [
+                    { label: 'Enrollment documents ', icon: 'pi pi-fw pi-file', to: '/secure/mpayDocs', owner:[2] },
                     //{ label: 'usersTable', icon: 'pi pi-fw pi-id-card', to: '/secure/users' },
                     { label: 'Merchant Details', icon: 'pi pi-fw pi-truck', to: '/secure/merchantDetails', owner:[2] },
                     { label: 'Owner Details', icon: 'pi pi-fw pi-id-card', to: '/secure/ownerDetails', owner:[2] },

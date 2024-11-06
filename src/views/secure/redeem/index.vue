@@ -234,7 +234,13 @@ const getNewData =async(e,type=0)=>{
                             </template>
                             <template #center>
                                 <IconField>
-                                <h2>Available Balance for redeem:<Tag icon="pi pi-money-bill" severity="success" v-if="hierarchys.length>0">{{hierarchys[0]['rewardbalance']}}</Tag><Tag icon="pi pi-check" severity="danger" v-else>0.00</Tag></h2>
+                                <h2>Available Balance for redeem:
+                                   
+                                    <Avatar value="8" size="xlarge" severity="success" v-if="hierarchys.length>0">{{hierarchys[0]['rewardbalance']}}</Avatar>
+                                    <Avatar value="8" size="xlarge" severity="danger" v-else>0.00</Avatar>
+                                
+                                    
+                                  </h2> 
                                 </IconField>
                             </template>
                             <template v-slot:end>

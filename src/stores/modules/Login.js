@@ -190,12 +190,15 @@ function loggedProcedure(){
            },
           async logOut (Id = '') {
             let refreshToken =this.userInfo.refresh;
+            let username =this.userInfo.username
             localStorage.removeItem('users')
             this.userInfo = {}
             this.token = ''
             this.logged = 0
             this.loading = false
-            localStorage.setItem('refreshToken',refreshToken)
+            localStorage.setItem(username+'_refreshToken2',refreshToken)
+            console.log(refreshToken)
+            console.log("****AZAD******")
             router.push('/auth/login');
           },
            goRegister (Id = '') {
