@@ -1,6 +1,7 @@
 
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
+import { formatDateReadable } from '@/lib/functions';
 import { useRewardStore } from '@/stores/modules/Reward';
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
@@ -363,10 +364,12 @@ const getNewData =async(e,type=0)=>{
     </template>
 </Column>
             
-<Column field="status"  dataType="boolean" header="Claimed" :showAddButton="false"  filterField="createAt"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
+<Column field="status"  dataType="boolean" header="Status" :showAddButton="false"  filterField="createAt"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Status</span>
-        {{slotProps.data.status}}
+      
+        <Tag severity="danger" v-if="!slotProps.data.status">Pending</Tag>
+        <Tag severity="success" v-if="slotProps.data.status">Transferred</Tag>
     </template>
     
 </Column>         
@@ -393,7 +396,7 @@ const getNewData =async(e,type=0)=>{
 <Column field="createAt"  dataType="date" header="Created At" :showAddButton="false"  filterField="createAt"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Time</span>
-        {{slotProps.data.createAt}}
+        {{formatDateReadable(slotProps.data.createAt)}}
     </template>
     <template #filter="{ filterModel }">
     
