@@ -117,7 +117,7 @@ function loggedProcedure(){
             //  if(responseRefresh["errors"]==undefined || responseRefresh["errors"]==null) {
                 const decode = VueJwtDecode.decode(response.accessToken) 
                 // console.log("STEP2")
-               // console.log(decode)
+                // console.log(decode)
                   this.userInfo = {
                     name: decode.name,
                     mobileno: decode.mobile,
