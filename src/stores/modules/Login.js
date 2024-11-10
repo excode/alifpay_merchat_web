@@ -87,6 +87,66 @@ function loggedProcedure(){
           
             }
           },
+          async login2(request = {}) {
+            this.loading =true 
+            let refreshToken =localStorage.getItem(request.username.trim()+'_refreshToken2')
+            let useRefresh = false;
+            request={...request,"_x":"0"}
+            if(refreshToken && refreshToken.length>10){
+              request={...request,"_x":1}
+              useRefresh=true
+            }
+            
+            const response = await postData( '/auth2',request,false);
+            //console.log(request)
+            if(response["errors"]==undefined || response["errors"]==null) {
+              
+            this.error = null
+            this.loading =false
+            this.token = response.accessToken
+            //localStorage.setItem('users', JSON.stringify(this.userInfo ))
+            //router.push('/secure');
+           // console.log()
+           // localStorage.setItem('preLogin', JSON.stringify({...response,username:request.username} ))
+           
+           // if(useRefresh){
+             // let requestRefresh={refresh_token:refreshToken}
+            //  const responseRefresh = await postData( '/refreshMytoken',requestRefresh,false);
+            
+            //  console.log("STEP1")
+            //  if(responseRefresh["errors"]==undefined || responseRefresh["errors"]==null) {
+                const decode = VueJwtDecode.decode(response.accessToken) 
+                // console.log("STEP2")
+               // console.log(decode)
+                  this.userInfo = {
+                    name: decode.name,
+                    mobileno: decode.mobile,
+                    username: decode.username,
+                    email: decode.email,
+                    userType: decode.userType,
+                    userId: decode.userId,
+                    introducer: decode.introducer,
+                    token: response.accessToken,
+                    refresh: response.refreshToken
+                }
+               
+                this.error = null
+                this.loading =false
+                this.token = response.accessToken
+                localStorage.setItem('users', JSON.stringify(this.userInfo ))
+                localStorage.setItem(decode.username+'_refreshToken2',response.refreshToken)
+                router.push('/secure');
+             
+           
+            
+            
+          } else {
+               // console.log(response["errors"]);
+                this.error = listError(response["errors"]) 
+                this.loading = false
+          
+            }
+          },
           async verifyOTP(request = {}) {
             this.loading =true 
             const response = await postData( '/authVerify',request,false);

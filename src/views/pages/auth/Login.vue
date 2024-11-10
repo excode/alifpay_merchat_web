@@ -10,7 +10,7 @@ const { layoutConfig } = useLayout();
 const toast = useToast();
 const { loading,error} = storeToRefs(useLoginStore())
 const {  
-    login
+    login2
   } = useLoginStore()
 const email = ref('');
 const password = ref('');
@@ -21,7 +21,7 @@ const logoUrl = computed(() => {
 });
 const submit=async()=>{
    
-   await login({username:email.value,password:password.value})
+   await login2({username:email.value,password:password.value})
     if(error.value){
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
     }
