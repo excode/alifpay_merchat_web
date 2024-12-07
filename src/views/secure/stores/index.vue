@@ -160,6 +160,8 @@ const openNew = () => {
         price:0.0,
         sharingValue:0.0,
         businessCategory:cat,
+        businessDays:'',
+        businessHour:'9:30 AM-10:00 PM',
         country:null,
         location:{type:'Point',coordinates:[latitude.value,longitude.value]}
     };
@@ -172,7 +174,7 @@ const hideDialog = () => {
     storesDialog.value = false;
     submitted.value = false;
 };
-
+const days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const saveStores = async() => {
     submitted.value = true;
     const validationErrors=validateForm(stores.value,validation)
@@ -530,11 +532,14 @@ const getNewData =async(e,type=0)=>{
             
             
                             
-                            <Column headerStyle="min-width:10rem;">
+                            <Column headerStyle="min-width:15rem;">
                                 <template #body="slotProps">
                                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editStores(slotProps.data)" />
                                     
-                                    <Button icon="pi pi-list" class="p-button-rounded p-button-info mt-2" @click="$router.push('/secure/stores/'+slotProps.data.id)"></Button>
+                                    <Button icon="pi pi-list" class="p-button-rounded p-button-info mr-2" @click="$router.push('/secure/stores/'+slotProps.data.id)"></Button>
+                                    <Button icon="pi pi-qrcode" class="p-button-rounded p-button-info mt-2" @click="$router.push('/secure/stores/qr/'+slotProps.data.id)"></Button>
+
+                                    
                                 </template>
                             </Column>
                         </DataTable>
@@ -568,6 +573,16 @@ const getNewData =async(e,type=0)=>{
     <div class="field">
         <label htmlFor="description">Description</label>
          <Textarea id="description" v-model="stores.description"  autosize rows="5" cols="30"    />
+    </div>
+    <div class="field">
+        <label htmlFor="businessHour">Business Hours</label>
+         <InputText id="businessHour" v-model="stores.businessHour"     />
+    </div>
+    <div class="field">
+        <label htmlFor="businessDays">Operating days</label>
+        
+         <MultiSelect v-model="stores.businessDays" :options="days"  placeholder="Select Weekdays"
+    :maxSelectedLabels="3" class="w-full md:w-20rem" />
     </div>
             
     <div class="field">

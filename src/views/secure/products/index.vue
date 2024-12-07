@@ -3,6 +3,7 @@
 import config from '@/config/index';
 import { useLayout } from '@/layout/composables/layout';
 import { useProductsStore } from '@/stores/modules/Products';
+import { useStoresStore } from '@/stores/modules/Stores';
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
@@ -22,7 +23,10 @@ import { validate, validateForm } from '@/lib/validation';
     updateProducts,
     deleteProducts
     } = useProductsStore()
-
+    const { storess} = storeToRefs(useStoresStore())
+    const {  
+        getStoresAll
+    } = useStoresStore()
 
 const toast = useToast();
 const { contextPath } = useLayout();
@@ -51,15 +55,16 @@ const uploadInfo = ref(null);
 // THE VALIDATION RULES
 const validation=[
     {id:'name',type:validate.text,max:0,min:0,required:true},
-{id:'category',type:validate.text,required:true},
-{id:'description',type:validate.text,max:0,min:0,required:false},
-{id:'price',type:validate.number,max:0,min:0,required:true},
-{id:'unit',type:validate.text,max:0,min:0,required:false}
+    {id:'category',type:validate.text,required:true},
+    {id:'description',type:validate.text,max:0,min:0,required:false},
+    {id:'price',type:validate.number,max:0,min:0,required:true},
+    {id:'unit',type:validate.text,max:0,min:0,required:false}
 ]
 onBeforeMount(() => {
     initFilters();
 });
 onMounted(async() => {
+    await getStoresAll();
     await getProducts()
     await getCategories({});    
 
@@ -73,10 +78,11 @@ getUserInfo()
 const openNew = () => {
     let emptyProducts = {
         name:'',
-category:null,
-description:'',
-price:0,
-unit:''
+        stores:'',
+        category:null,
+        description:'',
+        price:0,
+        unit:''
     };
     products.value = emptyProducts;
     submitted.value = false;
@@ -171,12 +177,13 @@ const initFilters = () => {
     filters.value = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-category: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-price: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-createBy: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-createAt: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-description: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-unit: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
+        stores: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        category: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        price: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        createBy: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+        createAt: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+        description: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+        unit: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
     };
 };
 const getNewData =async(e,type=0)=>{
@@ -344,7 +351,17 @@ const getNewData =async(e,type=0)=>{
 </Column>
             
             
+<Column field="stores"   header="Stores" :showAddButton="false"  filterField="stores"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
+    <template #body="slotProps">
+        <span class="p-column-title">Business/Stores</span>
+        {{slotProps.data.stores?.businessName}}
+    </template>
+    <template #filter="{ filterModel }">
+    
+<Dropdown optionLabel="businessName" optionValue="id"  v-model="filterModel.value" :options="storess"    placeholder="Search by stores" className="p-column-filter" />           
 
+    </template>
+</Column>
           
          
 <Column field="category"   header="Category" :showAddButton="false"  filterField="category"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
@@ -421,7 +438,10 @@ const getNewData =async(e,type=0)=>{
                         <simple-pagination :currentpage="page" :pages="totalpages" @changePage="pageChange"></simple-pagination>
                         <Dialog v-model:visible="productsDialog" :style="{ width: '450px' }" header="Products Details" :modal="true" class="p-fluid">
                             
-                            
+                            <div class="field">
+                                <label htmlFor="category">Business/Store Name</label>
+                                 <Dropdown optionLabel="businessName" optionValue="id"   id="stores"     v-model="products.stores" :options="storess"   />
+                            </div>                        
     <div class="field">
         <label htmlFor="name">Name</label>
          <InputText id="name" type="text" v-model="products.name"  autoFocus  required :class="{ 'p-invalid': submitted && !products.name }" />

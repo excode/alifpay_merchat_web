@@ -16,6 +16,7 @@
         "primeflex": "^3.2.1",
         "primeicons": "^6.0.1",
         "primevue": "^3.28.0",
+        "qrcode-vue3": "^1.7.1",
         "vue": "^3.2.41",
         "vue-jwt-decode": "^0.1.0",
         "vue-router": "^4.1.5",

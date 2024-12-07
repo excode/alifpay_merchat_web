@@ -7,13 +7,19 @@ import { storeToRefs } from 'pinia';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { GoogleMap, Marker } from 'vue3-google-map';
 const { stores, error,loading} = storeToRefs(useStoresStore())
 const {  
 getStoresDetails,
 updateStores
 } = useStoresStore()
-const map_api_token1=import.meta.env.VITE_MAP_API;
+const mapRef = ref(null);
+const markers=ref([]);
+const infoWindo = ref({
+        visible: false,
+        text: "",
+        position: null,
+      })
+//const map_api_token1=import.meta.env.VITE_MAP_API;
     const { userInfo} = storeToRefs(useLoginStore())
     const {  
         getUserInfo,
@@ -27,6 +33,7 @@ const map_api_token1=import.meta.env.VITE_MAP_API;
     const toast = useToast();
     
   const setPlace=(e)=>{
+   //console.log(e)
     let lat = e.geometry.location.lat();
     let lng = e.geometry.location.lng();
     center.value={lat: lat, lng: lng}
@@ -35,12 +42,41 @@ const map_api_token1=import.meta.env.VITE_MAP_API;
   const newClick=(e)=>{
     
     
+    
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
     center.value={lat: lat, lng: lng}
+    console.log(`Clicked coordinates: Lat: ${lat}, Lng: ${lng}`);
+    //markers.value= [{ position:{lat: lat, lng: lng}  }]
     enableSave.value=true;
+    //console.log(markers.value[0])
+
+
+    const customText = `You clicked at Latitude: ${lat}, Longitude: ${lng}`;
+
+      // Add a marker at the clicked location
+      markers.value.push({
+        position: { lat, lng },
+        text: customText, // Save custom text for the marker
+      });
+      // Show the info window
+      infoWindo.value = {
+        visible: true,
+        text: customText,
+        position: { lat, lng },
+      };
     
   }
+  const showInfoWindow=(index)=> {
+    const marker = markers.value[index];
+    infoWindo.value = {
+        visible: true,
+        text: "aaa",
+        position: marker.position,
+      };
+    }
+  
+const options = ref({});
 onMounted(async() => {
 const route = useRoute();  
 const id = route.params.id; // read parameter id (it is reactive) 
@@ -48,8 +84,11 @@ await getStoresDetails(id)
 
     //GET THE USER TOEKN           
     getUserInfo()
+    //setTimeout(triggerMapResize, 100);
     if(stores.value?.location?.coordinates[0]>0){
         center.value={lat: stores.value?.location?.coordinates[1], lng: stores.value?.location?.coordinates[0]}
+        options.value={}
+        //markers.value= [{ position:center.value }]
     }
     
 });
@@ -100,7 +139,17 @@ const saveStores = async() => {
         uploadDialog.value = false;
     
     };
-        
+    
+    const triggerMapResize = () => {
+  if (mapRef.value?.map) {
+    //console.log("*****I AM FIRED *****")
+  //  google.maps.event.trigger(mapRef.value.map, 'resize');
+  }
+};
+
+
+// Watch center and trigger resize when it changes
+//watch(center, triggerMapResize);
                   
 </script>
 <template>
@@ -111,7 +160,7 @@ const saveStores = async() => {
 <i class="pi pi-spin pi-cog" style="font-size: 4rem"></i>
 </div>
   <div v-else class="surface-section">
-        <div class="font-medium text-3xl text-900 mb-3"></div>
+   <div class="font-medium text-3xl text-900 mb-3"></div>
         
     <div className="card flex justify-content-center">
         
@@ -130,6 +179,8 @@ const saveStores = async() => {
                    <Button  icon="pi pi-upload" class="p-button-rounded p-button-success mr-2" @click="$event=>showUploadDialog($event,stores,'logo')" />
                </template>
         </Image>
+
+        
         </div>
             
     </div>
@@ -166,6 +217,25 @@ const saveStores = async() => {
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
         <div className="text-500 w-6 md:w-2 font-medium">Description</div>
         <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{stores.description}}</div>
+        
+    </li>       
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Business Hour</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{stores.businessHour}}</div>
+        
+    </li>       
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Business days</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+
+
+            <Chip
+      v-for="(day, index) in stores.businessDays"
+      :key="index"
+      :label="day"
+      icon="pi pi-calendar"
+    />
+        </div>
         
     </li>       
   
@@ -223,27 +293,65 @@ const saveStores = async() => {
         
     </li>    
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+    
+        <InlineMessage severity="info">
+<p>
+            Instructions for Location Selection:</p>
+
+            <p>Search for your location on Google Maps.</p>
+            <p>If the exact address or business name is not available, search for a nearby reference address.</p>
+            <p>Click on the map to obtain the exact latitude and longitude of your desired location.</p>
+            <p>After selecting the location, save the information.</p>
+        </InlineMessage>
+    
+        
+    </li>    
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+
     <GMapAutocomplete
 
-    class="p-inputtext p-component"
+    class="p-inputtext p-component gmap-autocomplete-input"
     placeholder="Search Address"
     @place_changed="setPlace"
  >
    
 </GMapAutocomplete>   
-<Button :loading="submitted" type="button" label="Update" icon="pi pi-check" class="p-button-text" @click="saveStores" />
+<Button :loading="submitted" type="button" label="Update Coordinate(Latitude & Longitude)" icon="pi pi-check" class="p-button-text" @click="saveStores" />
 </li> 
   <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
-   
+    <GMapMap :center="center"
+    :options="options"
+     :zoom="15"
+     ref="mapRef"
+     @click="newClick"
+     map-type-id="terrain"
+     style="width: 100vw; height: 40rem">
+     <GMapMarker
+      key="index1"
+      
+      :position="center"
+      :icon='{
+        url: "https://alifpay.com.my/map-marker.png",
+        scaledSize: {width: 64, height: 64}
+      }'
+      :clickable="true"
+      :draggable="true"
+    />
+
+    
+    </GMapMap>
+<!--
    <GoogleMap
-  :api-key="map_api_token1"
-  style="width: 100%; height: 500px"
-  :center="center"
-  :zoom="15"
-  @click="newClick"
+    ref="mapRef"
+    :api-key="map_api_token1"
+    style="width: 100%; height: 500px"
+    :center="center"
+    :zoom="15"
+    @click="newClick"
   >
     <Marker :options="{ position: center }" />
   </GoogleMap>
+  -->
   </li>
                 
         </ul>
@@ -266,6 +374,25 @@ const saveStores = async() => {
                 
 </div>
 </template>
+<style>
+/* Custom style for the GMapAutocomplete input */
+.gmap-autocomplete-input {
+  font-size: 1.2rem; /* Make the font size larger */
+  padding: 10px; /* Increase padding */
+  height: 50px; /* Set a larger height */
+  width: 600px;
+}
+.info-window {
+    position: absolute;
+    background: white;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    z-index: 10;
+    pointer-events: none;
+  }
+</style>
+
 <style scoped lang="scss">
 @import '@/assets/demo/styles/badges.scss';
 </style>

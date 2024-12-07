@@ -2,12 +2,12 @@
 import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
 import config from '@/config/index'
-import { useStoresStore } from '@/stores/modules/Stores'
+import { useInsuranceCompanyStore } from '@/stores/modules/InsuranceCompany'
 import moment from 'moment'
-const { storess, error, loading,totalpages,page,totalRecords} = storeToRefs(useStoresStore())
+const { insuranceCompanys, error, loading,totalpages,page,totalRecords} = storeToRefs(useInsuranceCompanyStore())
 const {  
-getStores
-} = useStoresStore()
+getInsuranceCompany
+} = useInsuranceCompanyStore()
 
 const layout = ref('grid');
 const rows = ref(9)
@@ -20,7 +20,7 @@ const sortOptions = ref([
     { label: 'New to Old', value: 'id' }
 ]);
 onMounted(() => {
-    getStores({limit:rows.value})
+    getInsuranceCompany({limit:rows.value})
 });
 
 const onSortChange = (event) => {
@@ -40,7 +40,7 @@ const onSortChange = (event) => {
 const newData=async(e,type)=>{
     let request={limit:e.rows,page:e.page}
     if(type==2)  request={limit:e.rows,page:0}
-     await getStores(request)
+     await getInsuranceCompany(request)
 }
 </script>
 
@@ -49,10 +49,10 @@ const newData=async(e,type)=>{
         <div class="col-12">
             <div class="card">
               
-                <h5>Stores</h5>
+                <h5>InsuranceCompany</h5>
                 <DataView 
                 :lazy="true"
-                :value="storess" 
+                :value="insuranceCompanys" 
                 :totalRecords="totalRecords"
                 :pageCount="totalpages"
                 :layout="layout" 
@@ -80,7 +80,7 @@ const newData=async(e,type)=>{
                                 <img v-else src="/photo_na.png" :alt="slotProps.data.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
                                 <div class="flex-1 text-center md:text-left">
                                     <div class="font-bold text-2xl">{{ slotProps.data.createBy }}</div>
-                                    <div class="mb-3">{{ slotProps.data.businessName }}</div>
+                                    <div class="mb-3">{{ slotProps.data.companyName }}</div>
                                     <Rating :modelValue="Math.floor(Math.random() * 5)" :readonly="true" :cancel="false" class="mb-2"></Rating>
                                     <div class="flex align-items-center">
                                         <i class="pi pi-tag mr-2"></i>

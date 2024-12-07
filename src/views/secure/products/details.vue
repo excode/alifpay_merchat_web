@@ -100,7 +100,11 @@ await getProductsDetails(id)
         <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{products.name}}</div>
         
     </li>       
-  
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Store/Business Name</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{products.stores?.businessName}}</div>
+        
+    </li>       
                 
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
         <div className="text-500 w-6 md:w-2 font-medium">Category</div>

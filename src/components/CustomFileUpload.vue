@@ -1,5 +1,5 @@
 <script>
-import { useToast} from "primevue/usetoast";
+import { useToast } from "primevue/usetoast";
 export default {
   data() {
     return{
@@ -85,6 +85,7 @@ onBeforeUpload(event){
        <Toast/>
         <FileUpload @before-send="$event=>onBeforeUpload($event)" :name="fieldName" :url="uploadUrl" @upload="$event=>onTemplatedUpload($event)" :multiple="false" :accept="accept" :maxFileSize="maxFileSize" @select="$event=>onSelectedFiles($event)">
             <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                <h4>File size mustn't exceed 800 kb</h4>
                 <div class="flex flex-wrap justify-content-between align-items-center flex-1 gap-2">
                     <div class="flex gap-2">
                         <Button @click="chooseCallback()" icon="pi pi-images" rounded outlined></Button>
