@@ -217,10 +217,26 @@
                 name: 'stores.details',
                 component: () => import('@/views/secure/stores/details.vue')
             }
-
-
             ,
+            {
+                path: '/secure/stores/qr/:id',
+                name: 'stores.qr.details',
+                component: () => import('@/views/secure/stores/qr.vue')
+            }
+            ,
+            {
+                path: '/secure/transactions',
+                name: 'transactions',
+                component: () => import('@/views/secure/transactions/index.vue'),
+                meta: { source: 'transactions' },
+                props: { key: 'transactions' }
+            },
 
+            {
+                path: '/secure/transactions/:id',
+                name: 'transactions.details',
+                component: () => import('@/views/secure/transactions/details.vue')
+            }
             //END NEXT
 
            
