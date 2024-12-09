@@ -154,13 +154,14 @@ const initFilters = () => {
     filters.value = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         merchantID: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-storesId: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-sender: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-amount: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-sharingValue: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-refNumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
-sharingValueDistributed: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-createAt: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }
+        storesId: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+        sender: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+        amount: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        sharingValue: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        refNumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+        sharingValueDistributed: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        dispatched: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+        createAt: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }
     };
 };
 const getNewData =async(e,type=0)=>{
@@ -352,7 +353,17 @@ const getNewData =async(e,type=0)=>{
 </Column>
             
             
-
+<Column field="dispatched"  dataType="boolean"   header="Dispatched" :showAddButton="false"  filterField="dispatched"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
+    <template #body="slotProps">
+        <span class="p-column-title">Dispatched</span>
+        {{slotProps.data.dispatched}}
+    </template>
+    <template #filter="{ filterModel }">
+    
+        <TriStateCheckbox v-model="filterModel.value"   />
+            
+    </template>
+</Column>
           
          
 <Column field="sharingValueDistributed"  dataType="boolean"   header="Sharing Value Distributed" :showAddButton="false"  filterField="sharingValueDistributed"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
