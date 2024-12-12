@@ -223,6 +223,7 @@ const updateWallet = (editStores) => {
 };
 const saveWallet = async() => {
     storeWallet.value = { ... storeWallet.value,"storeId":stores.value.id };
+    console.log( storeWallet.value)
     await updateStoreWallet(storeWallet.value);
     if(error.value==undefined || error.value==null){
     stores.value = {};
@@ -659,28 +660,28 @@ const getNewData =async(e,type=0)=>{
                             </template>
                         </Dialog>
         
-                        <Dialog v-model:visible="deleteStoresDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
+                        <Dialog v-model:visible="deleteStoresDialog" :style="{ width: '450px' }" header="Link with Wallet" :modal="true">
                             <div class="flex align-items-center justify-content-center">
                                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                                 <span v-if="stores"
-                                    >Please request wallet owner for  <b>{{stores.businessName}}</b>  to share the Authorization PIN which can be generate from Alif-Pay wallet app. <b>{{ storeWallet.username }}</b
-                                    >?</span
+                                    >Please request the wallet owner of <b>{{stores.businessName}}</b> to share the Authorization PIN, which can be generated from the Alif-Pay wallet app. If the username is not available, the system will not send an alert. Please confirm the username <b>{{storeWallet.username}}</b> before proceeding.</span
                                 >
                                 
                             </div>
-                            <div class="field">
-                                <label htmlFor="state" class="mr-3">Wallet username</label>
+                            <div class="field mt-3">
+                                <label htmlFor="state" class="mr-3 mt-3">Wallet username</label>
                                 <InputText id="wallet_username" type="text" v-model="storeWallet.username"  autoFocus  required :class="{ 'p-invalid': submitted && !storeWallet.username }" />
                             </div> 
 
-                            <div class="field">
+                            <div class="field mb-3">
                                 <label htmlFor="state" class="mr-3">Authorization PIN</label>
                                 <InputText id="otp2" type="text" v-model="storeWallet.otp2"  autoFocus  required />
-                                <Button label="Request to generate Authorization PIN" icon="pi pi-check" class="p-button-text" @click="delStores" />
+                                <span  v-if="loading_otp">Saving ... please wait</span>
+                                <Button v-else label="Request to generate Authorization PIN" icon="pi pi-key" severity="help"  class=" mt-2" @click="delStores" />
                             </div> 
                             <template #footer>
                                 <span  v-if="loading_otp">Saving ... please wait</span>
-                                <Button v-else label="Update" icon="pi pi-times" class="p-button-text" @click="saveWallet" />
+                                <Button v-else label="Update" icon="pi pi-save"  class="button button-success" @click="saveWallet" />
                                 
                             </template>
                         </Dialog>

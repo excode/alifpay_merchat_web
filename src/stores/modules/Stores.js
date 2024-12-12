@@ -145,15 +145,21 @@ import { defineStore } from 'pinia'
               this.curdLoading = false
             }
           },
-          async sendRequestOTP2(username,request = {}) {
-            this.loading_otp =true 
-            const response = await patchData( '/users/request/otp2/'+username,request);
-            if(response["errors"]==undefined) {
+          async sendRequestOTP2(username) {
+            if(username){
+              this.loading_otp =true 
+              const response = await patchData( '/users/request/otp2/'+username,{});
+              if(response["errors"]==undefined) {
+                this.loading_otp = false
+                this.error=null
+              } else {
+                this.error=listError(response["errors"])
+                this.loading_otp = false
+              
+              }
+            }else{
               this.loading_otp = false
-            
-            } else {
-              this.loading_otp = false
-            
+              this.error="username is empty"
             }
           },
           async updateStoreWallet(request = {}) {
