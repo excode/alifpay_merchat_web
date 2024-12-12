@@ -202,6 +202,11 @@ const saveStores = async() => {
         <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{stores.sharingValue}} %</div>
         
     </li>  
+    <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+        <div className="text-500 w-6 md:w-2 font-medium">Wallet username</div>
+        <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"><b>{{stores.wallet_username}} </b></div>
+        
+    </li>  
     <li className="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap" v-if="stores.businessCategory=='Community' || stores.businessCategory=='Marketplace'">
         <div className="text-500 w-6 md:w-2 font-medium">Price</div>
         <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{stores.price}} RM</div>
