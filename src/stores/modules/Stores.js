@@ -13,7 +13,8 @@ import { defineStore } from 'pinia'
       page:0,
       loading:false,
       curdLoading:false,
-      stores : {}
+      stores : {},
+      loading_otp:false
       }),
       
       actions: {
@@ -142,6 +143,29 @@ import { defineStore } from 'pinia'
               this.error = listError(response["errors"]) 
               this.loading = false
               this.curdLoading = false
+            }
+          },
+          async sendRequestOTP2(username,request = {}) {
+            this.loading_otp =true 
+            const response = await patchData( '/users/request/otp2/'+username,request);
+            if(response["errors"]==undefined) {
+              this.loading_otp = false
+            
+            } else {
+              this.loading_otp = false
+            
+            }
+          },
+          async updateStoreWallet(request = {}) {
+            this.loading_otp =true 
+            const response = await patchData( '/stores/wallet/'+ request.storeId,request,true,config.serverURIMer);
+            if(response["errors"]==undefined) {
+              this.loading_otp = false
+              this.error=null;
+            } else {
+              this.error=listError(response["errors"])
+              this.loading_otp = false
+            
             }
           }
       },

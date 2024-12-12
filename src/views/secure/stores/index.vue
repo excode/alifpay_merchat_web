@@ -20,6 +20,7 @@ const route = useRoute();
 const pageName = ref("");
 
 const center = ref({});
+const storeWallet = ref({});
 const setPlace = (place) => {
     console.log(place)
     /*
@@ -55,13 +56,15 @@ const autocompleteInput = ref(null);
 
 // END GOOGLE MAP
 import { validate, validateForm } from '@/lib/validation';
-    const { storess, error,curdLoading, loading,totalpages,page,totalRecords} = storeToRefs(useStoresStore())
+    const { storess, error,curdLoading,loading_otp, loading,totalpages,page,totalRecords} = storeToRefs(useStoresStore())
     const {  
     getStores,
     updateStoresValue ,
     addStores,
     updateStores,
-    deleteStores
+    deleteStores,
+    updateStoreWallet,
+    sendRequestOTP2
     } = useStoresStore()
 
 
@@ -214,17 +217,35 @@ const confirmDeleteStores = (editStores) => {
     stores.value = { ...editStores };
     deleteStoresDialog.value = true;
 };
-
-const delStores = async() => {
-    await deleteStores(stores.value.id);
-    deleteStoresDialog.value = false;
+const updateWallet = (editStores) => {
+    stores.value = { ...editStores };
+    deleteStoresDialog.value = true;
+};
+const saveWallet = async() => {
+    storeWallet.value = { ... storeWallet.value,"storeId":stores.value.id };
+    await updateStoreWallet(storeWallet.value);
     if(error.value==undefined || error.value==null){
     stores.value = {};
-        toast.add({ severity: 'success', summary: 'Successful', detail: 'Stores Deleted', life: 3000 });
+        toast.add({ severity: 'success', summary: 'Successful', detail: 'Merchant wallet has been linked', life: 3000 });
     }else{
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
     }
 };
+
+
+
+const delStores = async() => {
+
+    await sendRequestOTP2(storeWallet.value.username);
+    //deleteStoresDialog.value = false;
+    if(error.value==undefined || error.value==null){
+    stores.value = {};
+        toast.add({ severity: 'success', summary: 'Successful', detail: 'Please request wallet owner to send PIN to wallet link', life: 3000 });
+    }else{
+        toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
+    }
+};
+
 const autoCompleteSelect =(e,fieldName,valueId)=>{
     let val=e.value[valueId];
     stores.value =  {...stores.value,[fieldName]:val};
@@ -535,10 +556,10 @@ const getNewData =async(e,type=0)=>{
                             <Column headerStyle="min-width:15rem;">
                                 <template #body="slotProps">
                                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editStores(slotProps.data)" />
-                                    
-                                    <Button icon="pi pi-list" class="p-button-rounded p-button-info mr-2" @click="$router.push('/secure/stores/'+slotProps.data.id)"></Button>
+                                    <Button icon="pi pi-wallet" class="p-button-rounded p-button-info mt-2" @click="updateWallet(slotProps.data)"></Button>
+                                    <Button icon="pi pi-list" class="p-button-rounded p-button-warning mr-2" @click="$router.push('/secure/stores/'+slotProps.data.id)"></Button>
                                     <Button icon="pi pi-qrcode" class="p-button-rounded p-button-info mt-2" @click="$router.push('/secure/stores/qr/'+slotProps.data.id)"></Button>
-
+                                  
                                     
                                 </template>
                             </Column>
@@ -642,13 +663,25 @@ const getNewData =async(e,type=0)=>{
                             <div class="flex align-items-center justify-content-center">
                                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                                 <span v-if="stores"
-                                    >Are you sure you want to delete <b>{{ stores.name }}</b
+                                    >Please request wallet owner for  <b>{{stores.businessName}}</b>  to share the Authorization PIN which can be generate from Alif-Pay wallet app. <b>{{ storeWallet.username }}</b
                                     >?</span
                                 >
+                                
                             </div>
+                            <div class="field">
+                                <label htmlFor="state" class="mr-3">Wallet username</label>
+                                <InputText id="wallet_username" type="text" v-model="storeWallet.username"  autoFocus  required :class="{ 'p-invalid': submitted && !storeWallet.username }" />
+                            </div> 
+
+                            <div class="field">
+                                <label htmlFor="state" class="mr-3">Authorization PIN</label>
+                                <InputText id="otp2" type="text" v-model="storeWallet.otp2"  autoFocus  required />
+                                <Button label="Request to generate Authorization PIN" icon="pi pi-check" class="p-button-text" @click="delStores" />
+                            </div> 
                             <template #footer>
-                                <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteStoresDialog = false" />
-                                <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="delStores" />
+                                <span  v-if="loading_otp">Saving ... please wait</span>
+                                <Button v-else label="Update" icon="pi pi-times" class="p-button-text" @click="saveWallet" />
+                                
                             </template>
                         </Dialog>
         
