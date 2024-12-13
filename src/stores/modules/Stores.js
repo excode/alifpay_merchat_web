@@ -163,6 +163,7 @@ import { defineStore } from 'pinia'
             }
           },
           async updateStoreWallet(request = {}) {
+          if(request.storeId){
             this.loading_otp =true 
             const response = await patchData( '/stores/wallet/'+ request.storeId,request,true,config.serverURIMer);
             if(response["errors"]==undefined) {
@@ -173,7 +174,11 @@ import { defineStore } from 'pinia'
               this.loading_otp = false
             
             }
+          }else{
+            this.error="Store ID is undefined, Please refresh"
+            this.loading_otp = false
           }
+        }
       },
    
   })

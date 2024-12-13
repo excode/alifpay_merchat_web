@@ -221,12 +221,15 @@ const updateWallet = (editStores) => {
     stores.value = { ...editStores };
     deleteStoresDialog.value = true;
 };
-const saveWallet = async() => {
-    storeWallet.value = { ... storeWallet.value,"storeId":stores.value.id };
+const saveWallet = async(editStores) => {
+    storeWallet.value = { ... storeWallet.value,"storeId":editStores.id };
+    console.log( stores.value.id)
+    console.log( stores.value._id)
+    console.log( "***************")
     console.log( storeWallet.value)
     await updateStoreWallet(storeWallet.value);
     if(error.value==undefined || error.value==null){
-    stores.value = {};
+   
         toast.add({ severity: 'success', summary: 'Successful', detail: 'Merchant wallet has been linked', life: 3000 });
     }else{
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
@@ -240,7 +243,7 @@ const delStores = async() => {
     await sendRequestOTP2(storeWallet.value.username);
     //deleteStoresDialog.value = false;
     if(error.value==undefined || error.value==null){
-    stores.value = {};
+   
         toast.add({ severity: 'success', summary: 'Successful', detail: 'Please request wallet owner to send PIN to wallet link', life: 3000 });
     }else{
         toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
@@ -681,7 +684,7 @@ const getNewData =async(e,type=0)=>{
                             </div> 
                             <template #footer>
                                 <span  v-if="loading_otp">Saving ... please wait</span>
-                                <Button v-else label="Update" icon="pi pi-save"  class="button button-success" @click="saveWallet" />
+                                <Button v-else label="Update" icon="pi pi-save"  class="button button-success" @click="saveWallet(stores)" />
                                 
                             </template>
                         </Dialog>
