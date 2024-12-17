@@ -356,7 +356,9 @@ const getNewData =async(e,type=0)=>{
 <Column field="dispatched"  dataType="boolean"   header="Dispatched" :showAddButton="false"  filterField="dispatched"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Dispatched</span>
-        {{slotProps.data.dispatched}}
+       
+        <Tag severity="danger" v-if="!slotProps.data.Dispatched">Pending</Tag>
+        <Tag severity="success" v-if="slotProps.data.Dispatched">Transferred</Tag>
     </template>
     <template #filter="{ filterModel }">
     
@@ -369,7 +371,9 @@ const getNewData =async(e,type=0)=>{
 <Column field="sharingValueDistributed"  dataType="boolean"   header="Sharing Value Distributed" :showAddButton="false"  filterField="sharingValueDistributed"  :sortable="true" headerStyle="width:14%; min-width:10rem;">
     <template #body="slotProps">
         <span class="p-column-title">Sharing Value Distributed</span>
-        {{slotProps.data.sharingValueDistributed}}
+       
+        <Tag severity="danger" v-if="!slotProps.data.sharingValueDistributed">Pending</Tag>
+        <Tag severity="success" v-if="slotProps.data.sharingValueDistributed">Distributed</Tag>
     </template>
     <template #filter="{ filterModel }">
     

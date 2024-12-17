@@ -228,17 +228,17 @@ const getNewData =async(e,type=0)=>{
                         <Toolbar class="mb-4">
                             <template v-slot:start>
                                 <div class="my-2">
-                                    <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
+                                    <Button label="Redeem to Wallet" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
                                    
                                 </div>
                             </template>
                             <template #center>
                                 <IconField>
                                 <h2>Available Balance for redeem:
-                                   
-                                    <Avatar value="8" size="xlarge" severity="success" v-if="hierarchys.length>0">{{hierarchys[0]['rewardbalance']}}</Avatar>
+                                   <span class="ml-5">
+                                    <Avatar value="8" size="xlarge" severity="success" v-if="hierarchys.length>0">{{hierarchys[0]['rewardbalance'].toFixed(4)}}</Avatar>
                                     <Avatar value="8" size="xlarge" severity="danger" v-else>0.00</Avatar>
-                                
+                                </span>
                                     
                                   </h2> 
                                 </IconField>

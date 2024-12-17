@@ -158,7 +158,9 @@ watch(
                             
                         </Column>
                         <Column style="width: 15%" field="rewardbalance"  header="Reward Balance">
-                            
+                            <template #body="slotProps">
+                                {{ slotProps.data?.rewardbalance.toFixed(4) }}
+                             </template>
                         </Column>
                     </DataTable>
                     
