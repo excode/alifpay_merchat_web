@@ -357,8 +357,8 @@ const getNewData =async(e,type=0)=>{
     <template #body="slotProps">
         <span class="p-column-title">Dispatched</span>
        
-        <Tag severity="danger" v-if="!slotProps.data.Dispatched">Pending</Tag>
-        <Tag severity="success" v-if="slotProps.data.Dispatched">Transferred</Tag>
+        <Tag severity="danger" v-if="!slotProps.data.dispatched">Pending</Tag>
+        <Tag severity="success" v-if="slotProps.data.dispatched">Transferred</Tag>
     </template>
     <template #filter="{ filterModel }">
     
