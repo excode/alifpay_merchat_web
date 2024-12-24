@@ -1,16 +1,19 @@
 
 <script setup>
+import config from '@/config/index';
 import { useLoginStore } from '@/stores/modules/Login';
 import { useStoresStore } from '@/stores/modules/Stores';
 import { storeToRefs } from 'pinia';
 import QRCodeVue3 from "qrcode-vue3";
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-const { stores,loading} = storeToRefs(useStoresStore())
+
+const { stores,loading,logo_image} = storeToRefs(useStoresStore())
 const {  
-getStoresDetails
+getStoresDetails,convertImageToBase64
 } = useStoresStore()
 const qrCode=ref("");
+const logoURL=ref("")
     const { userInfo} = storeToRefs(useLoginStore())
     const {  
         getUserInfo,
@@ -26,10 +29,13 @@ onMounted(async() => {
 const route = useRoute();  
 const id = route.params.id; // read parameter id (it is reactive) 
 await getStoresDetails(id)
+logoURL.value = config.serverURIMer+'/' + stores.value.logo
+await convertImageToBase64(logoURL.value)
 
           
     getUserInfo()
     qrCode.value="alifpay_payment_"+stores.value.id+"_"+userInfo.value.userId
+    logoURL.value = config.serverURIMer+'/' + stores.value.logo
    
     
 });
@@ -56,6 +62,7 @@ await getStoresDetails(id)
         <div>
         
 <center><h3>{{stores.businessName}}</h3></center>
+{{ logoURL }}
         <QRCodeVue3 v-if="qrCode"
         :width="300"
         :height="300"
@@ -72,6 +79,7 @@ await getStoresDetails(id)
         :cornersDotOptions="{ type: undefined, color: '#000000' }"
         fileExt="png"
         :download="true"
+        :image="logo_image"
         myclass="my-qur"
         imgclass="img-qr"
         downloadButton="my-button"
