@@ -1,8 +1,10 @@
-import config from '@/config'
-import { listError } from '@/lib/functions'
-import { deleteData, getData, patchData, postData } from '@/lib/httpRequest'
-import router from '@/router/'
-import { defineStore } from 'pinia'
+import config from '@/config';
+import { listError } from '@/lib/functions';
+import { deleteData, getData, patchData, postData } from '@/lib/httpRequest';
+import router from '@/router/';
+import axios from 'axios';
+import { Buffer } from 'buffer';
+import { defineStore } from 'pinia';
   export const useStoresStore = defineStore('Stores', {
     state:() => ({
       storess: [],
@@ -14,7 +16,8 @@ import { defineStore } from 'pinia'
       loading:false,
       curdLoading:false,
       stores : {},
-      loading_otp:false
+      loading_otp:false,
+      logo_image:null
       }),
       
       actions: {
@@ -178,7 +181,34 @@ import { defineStore } from 'pinia'
             this.error="Store ID is undefined, Please refresh"
             this.loading_otp = false
           }
-        }
+        },
+        async convertImageToBase64(url) {
+          console.log("***************CALLING************")
+        
+          try{
+          const response = await axios.get(url, { responseType: 'arraybuffer' });
+
+          // Convert binary data to a Buffer
+          const buffer = Buffer.from(response.data, 'binary');
+  
+          // Convert the Buffer to a Base64 string
+          const base64 = buffer.toString('base64');
+  
+          // Determine the MIME type from response headers
+          const mimeType = response.headers['content-type'];
+  
+          // Construct the Base64 Data URL
+          const base64DataUrl = `data:${mimeType};base64,${base64}`;
+          console.log(url)
+          console.log(base64DataUrl)
+          this.logo_image=base64DataUrl
+          }catch(err){
+            console.log("***************ERROR************")
+            console.log(err)
+            this.logo_image=null
+          }
+          
+      }
       },
    
   })
