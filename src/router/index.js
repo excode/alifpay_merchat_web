@@ -62,6 +62,11 @@ const router = createRouter({
             name: 'error',
             component: () => import('@/views/pages/auth/Error.vue')
         },
+        {
+            path: '/reg/:referby',
+            name: 'register',
+            component: () => import('@/views/pages/auth/Register.vue')
+        },
         /** Sample  ROTUES Start FROM Here */
         /**  This routes were included in the  template which should be removed in  production version */
       

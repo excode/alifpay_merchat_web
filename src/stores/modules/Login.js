@@ -273,6 +273,28 @@ function loggedProcedure(){
             this.loading = false
             router.push('/auth/forget-password');
           },
+          async register(request = {}) {
+            this.loading =true 
+            const response = await postData( '/accounts/reg2',request,false);
+          
+            if(response["errors"]==undefined || response["errors"]==null) {
+             
+
+              
+              
+            
+            this.error = null
+            this.loading =false
+           
+            router.push('/auth/login');
+            
+          } else {
+               // console.log(response["errors"]);
+                this.error = listError(response["errors"]) 
+                this.loading = false
+          
+            }
+          },
          
       },
    

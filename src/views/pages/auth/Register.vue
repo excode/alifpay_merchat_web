@@ -16,14 +16,14 @@ const {
   const data=ref({
     name:"",
     email:"",
-    contactNumber:"",
+    username:"",
     introducer:"",
     password:"",
     country:"my"
 })
   onMounted(() => {
     const route = useRoute();  
-    data.value.introducer=route.params.introducer
+    data.value.introducer=route.params.referby
    
 });
 
@@ -52,7 +52,7 @@ const submit=async()=>{
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                     <div class="text-center mb-5">
                         
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome   Alifpay Merchant Registration!</div>
+                        <div class="text-900 text-3xl font-medium mb-3">Welcome   Alifpay  Registration!</div>
                     
                     </div>
 
@@ -63,7 +63,7 @@ const submit=async()=>{
                         <InputText id="introducer" type="text" placeholder="Introducers" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.introducer" />
 
                         <label for="username" class="block text-900 font-medium text-xl mb-2">Username</label>
-                        <InputText id="contactNumber" type="text" placeholder="username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.contactNumber" />
+                        <InputText id="username" type="text" placeholder="username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.username" />
 
                         <label for="name" class="block text-900 font-medium text-xl mb-2">Name</label>
                         <InputText id="name" type="text" placeholder="full name" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.name" />

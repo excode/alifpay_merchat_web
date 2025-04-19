@@ -5,8 +5,9 @@ import { useHierarchyStore } from '@/stores/modules/Hierarchy';
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
-import { onBeforeMount, onMounted, ref } from 'vue';
-//import { useProductStore } from '@/stores/modules/Product';
+import { onBeforeMount, onMounted, ref,computed } from 'vue';
+import { useLoginStore } from '@/stores/modules/Login';
+
 import { validate, validateForm } from '@/lib/validation';
     const { hierarchys, error,curdLoading, loading,totalpages,page,totalRecords} = storeToRefs(useHierarchyStore())
     const {  
@@ -16,8 +17,11 @@ import { validate, validateForm } from '@/lib/validation';
     updateHierarchy,
     deleteHierarchy
     } = useHierarchyStore()
-
-
+const { userInfo} = storeToRefs(useLoginStore())
+ const {  
+    getUserInfo
+   
+    } = useLoginStore()
 const toast = useToast();
 const { contextPath } = useLayout();
 const hierarchyDialog = ref(false);
@@ -42,13 +46,23 @@ onBeforeMount(() => {
     initFilters();
 });
 onMounted(async() => {
-    await getHierarchy()
+    await getHierarchy();
              
-    //await getProductAll({});
+     getUserInfo();
           
 
 });
+const referralUrl = computed(() => `https://web.alifpay.com.my/#/reg/${userInfo.value.username}`)
 
+const copyText = async () => {
+  try {
+    await navigator.clipboard.writeText(referralUrl.value)
+    alert('Copied to clipboard!')
+  } catch (err) {
+    alert('Failed to copy!')
+    console.error(err)
+  }
+}
 
 const openNew = () => {
     let emptyHierarchy = {
@@ -215,14 +229,16 @@ const getNewData =async(e,type=0)=>{
                             <template v-slot:start>
                                 <div class="my-2">
                                    
-                                    
+                                  <h3> {{referralUrl}}</h3> <Button 
+      label="Copy Link" 
+      icon="pi pi-copy" 
+      class="p-button-sm p-button-success" 
+      @click="copyText" 
+    />
                                 </div>
                             </template>
         
-                            <template v-slot:end>
-                               
-                                <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />
-                            </template>
+                          
                         </Toolbar>
         
                         <DataTable
