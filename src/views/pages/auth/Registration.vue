@@ -50,12 +50,12 @@ const submit=async()=>{
                         <label for="email1" class="block text-900 text-xl font-medium mb-2"></label>
                         <p>OTP has been sent to {{userPreInfo.masked}}</p>
                         <label for="introducer" class="block text-900 font-medium text-xl mb-2">Introducer</label>
-                        <InputText id="introducer" type="text" placeholder="introducers" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="introducer" />
+                        <InputText id="introducer" readonly type="text" placeholder="introducers" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="introducer" />
 
                         <label for="username" class="block text-900 font-medium text-xl mb-2">Username</label>
                         <InputText id="username" type="text" placeholder="username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="username" />
 
-                        <label for="name" class="block text-900 font-medium text-xl mb-2">Name</label>
+                        <label for="name" class="block text-900 font-medium text-xl mb-2">Name (Name as per IC/Passport)</label>
                         <InputText id="name" type="text" placeholder="full name" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="name" />
 
                         <label for="email" class="block text-900 font-medium text-xl mb-2">Email</label>
