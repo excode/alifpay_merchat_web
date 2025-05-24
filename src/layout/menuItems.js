@@ -31,14 +31,15 @@
             label: "Pre-Registration Merchant  & Marketplace",
             owner:[2],
             items: [
-                  
+                  /*
                   { label: 'e-Menu', icon: 'pi pi-fw pi-qrcode', to: '/secure/products', owner:[2] },
                    // { label: 'Products(Gallery)', icon: 'pi pi-fw pi-id-card', to: '/secure/products/dataview' },
                    { label: 'Merchant', icon: 'pi pi-fw pi-map', to: '/secure/stores', owner:[2]},
                    { label: 'Market-Place', icon: 'pi pi-fw pi-cart-plus', to: '/secure/marketplace', owner:[2]},
                    { label: 'Insurance', icon: 'pi pi-fw pi-heart-fill', to: '/secure/insurance', owner:[2]},
                    { label: 'Transactions', icon: 'pi pi-fw pi-arrow-right-arrow-left', to: '/secure/transactions', owner:[2]},
-                   // { label: 'Stores(Gallery)', icon: 'pi pi-fw pi-id-card', to: '/secure/stores/dataview' }
+                    */
+                    { label: 'Alifpay Business', name:"biz", icon: 'pi pi-fw pi-cart-plus', to: 'https://biz.mypaaa.com' }
             ],
         }, {
             label: "MPay Merchant ",
