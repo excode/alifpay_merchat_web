@@ -59,10 +59,10 @@ const submit=async()=>{
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2"></label>
                     
-                        <label for="introducer" class="block text-900 font-medium text-xl mb-2">Introducer</label>
+                        <label for="introducer" class="block text-900 font-medium text-xl mb-2">Introducer(Min 4 chars)</label>
                         <InputText id="introducer" readonly type="text" placeholder="Introducers" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.introducer" />
 
-                        <label for="username" class="block text-900 font-medium text-xl mb-2">Username</label>
+                        <label for="username" class="block text-900 font-medium text-xl mb-2">Username (Min 4 chars)</label>
                         <InputText id="username" type="text" placeholder="username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="data.username" />
 
                         <label for="name" class="block text-900 font-medium text-xl mb-2">Name  (Name as per IC/Passport)</label>
