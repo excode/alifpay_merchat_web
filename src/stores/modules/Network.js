@@ -160,8 +160,8 @@ import { defineStore } from 'pinia'
             const node = {
               key: user.id,
               label: user.username,
-              leaf: false,
-              data: { userType: user.userType }
+              leaf: user.refCount === 0,
+              data: { userType: user.userType,refCount:user.refCount }
             };
               tree.push(node);
  /*
