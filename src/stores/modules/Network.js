@@ -6,6 +6,7 @@ import { defineStore } from 'pinia'
     state:() => ({
         referrals: [],
         levelNodes: [],
+        levelNodes_n: [],
         binarary: {},
         error: null,
         totalpages:0,
@@ -58,6 +59,36 @@ import { defineStore } from 'pinia'
               } else {
                 // If the response is already a JSON object
                 this.levelNodes = [response];
+              }
+              this.loading = false
+              this.error = null
+            } else {
+            
+                this.error = listError(response["errors"]) 
+                this.loading = false
+            }
+          },
+          async getLevelNodes2(username,isRoot=true,request = {}) {
+            this.loading =true 
+            const response = await getData( `/hierarchy/single/level/${username}?productId=66e665de966efc2edaa97cf0`,request,true,config.refServerURI);
+            let mResponse=[];
+            if(response["errors"]==undefined) {
+             
+              if (typeof response === 'string') {
+                try {
+                  // Parse response string to JSON
+                  mResponse = JSON.parse(response);
+                } catch (error) {
+                  console.error("Failed to parse response JSON:", error);
+                }
+              } else {
+                mResponse=this.convertToPrimeVueTree(response);
+                // If the response is already a JSON object
+                if(isRoot){
+                  this.levelNodes = mResponse;
+                }else{
+                  this.levelNodes_n = mResponse;
+                }
               }
               this.loading = false
               this.error = null
@@ -121,6 +152,34 @@ import { defineStore } from 'pinia'
                 this.loading = false
             }
           },
+           convertToPrimeVueTree(users) {
+          const rootMap = {};
+          const tree = [];
+
+          for (const user of users) {
+            const node = {
+              key: user.id,
+              label: user.username,
+              leaf: false,
+              data: { userType: user.userType }
+            };
+              tree.push(node);
+ /*
+            if (!rootMap[user.parentId]) {
+              rootMap[user.parentId] = {
+                key: user.parentId,
+                label: user.parentId,
+                children: []
+              };
+              tree.push(rootMap[user.parentId]);
+            }
+*/
+
+           // rootMap[user.parentId].children.push(node);
+          }
+
+  return tree;
+}
         
       },
    
