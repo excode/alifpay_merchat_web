@@ -54,9 +54,24 @@ onMounted(async() => {
 });
 const referralUrl = computed(() => `https://web.alifpay.com.my/#/reg/${userInfo.value.username}`)
 
+const referralUrl2 = computed(() => {
+
+    return `https://web.alifpay.com.my/#/crop/reg/${userInfo.value.username}`;
+
+});
+
 const copyText = async () => {
   try {
     await navigator.clipboard.writeText(referralUrl.value)
+    alert('Copied to clipboard!')
+  } catch (err) {
+    alert('Failed to copy!')
+    console.error(err)
+  }
+}
+const copyText2 = async () => {
+  try {
+    await navigator.clipboard.writeText(referralUrl2.value)
     alert('Copied to clipboard!')
   } catch (err) {
     alert('Failed to copy!')
@@ -234,6 +249,12 @@ const getNewData =async(e,type=0)=>{
       icon="pi pi-copy" 
       class="p-button-sm p-button-success" 
       @click="copyText" 
+    />
+    <h3> {{referralUrl2}}</h3> <Button 
+      label="Copy Link" 
+      icon="pi pi-copy" 
+      class="p-button-sm p-button-success" 
+      @click="copyText2" 
     />
                                 </div>
                             </template>

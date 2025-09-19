@@ -3,7 +3,7 @@
     const menus=[
         {
         label: "Bank Accounts",
-        owner:[2,3,4],
+        owner:[0],
             items: [
             // { label: 'Merchant Info', icon: 'pi pi-fw pi-briefcase', to: '/secure/merchantInfo' },
                 { label: 'Bank Accounts', icon: 'pi pi-fw pi-wallet', to: '/secure/bankaccount' },
@@ -14,8 +14,20 @@
             ],
         },
         {
+            label: "Business Documents",
+            owner:[5],
+                items: [
+                
+                  { label: 'Bank Accounts', icon: 'pi pi-fw pi-wallet', to: '/secure/bankaccount' },
+                  { label: 'Fund Transfer', icon: 'pi pi-fw pi-send', to: '/secure/fundtransfer' },
+                   { label: 'Business Documents', icon: 'pi pi-fw pi-file', to: '/secure/merchantDocuments' },
+                   { label: 'Merchant Photos', icon: 'pi pi-fw pi-images', to: '/secure/merchantPhotos' },
+                ],
+        },
+        
+        {
             label: "AlifPay Network",
-            owner:[2,3],
+            owner:[2,3,5],
                 items: [
                 
                     { label: 'Wallet Account', icon: 'pi pi-fw pi-mobile', to: '/secure/accounts' },

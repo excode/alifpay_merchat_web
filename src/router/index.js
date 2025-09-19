@@ -67,6 +67,11 @@ const router = createRouter({
             name: 'register',
             component: () => import('@/views/pages/auth/Register.vue')
         },
+         {
+            path: '/crop/reg/:referby',
+            name: 'corp.register',
+            component: () => import('@/views/pages/auth/CorpRegister.vue')
+        },
         /** Sample  ROTUES Start FROM Here */
         /**  This routes were included in the  template which should be removed in  production version */
       
