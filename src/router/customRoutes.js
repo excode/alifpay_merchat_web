@@ -19,6 +19,17 @@
                 component: () => import('@/views/secure/bankaccount/details.vue')
             }
             ,
+             {
+                path: '/secure/bankaccount2',
+                name: 'bankaccount2',
+                component: () => import('@/views/secure/bankaccount2/index.vue')
+            },
+            {
+                path: '/secure/bankaccount2/:id',
+                name: 'bankaccount2.details',
+                component: () => import('@/views/secure/bankaccount2/details.vue')
+            }
+            ,
 
             {
                 path: '/secure/bankdocument',

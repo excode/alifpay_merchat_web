@@ -18,7 +18,7 @@
             owner:[5],
                 items: [
                 
-                  { label: 'Bank Accounts', icon: 'pi pi-fw pi-wallet', to: '/secure/bankaccount' },
+                  { label: 'Bank Accounts(2)', icon: 'pi pi-fw pi-wallet', to: '/secure/bankaccount2' },
                   { label: 'Fund Transfer', icon: 'pi pi-fw pi-send', to: '/secure/fundtransfer' },
                    { label: 'Business Documents', icon: 'pi pi-fw pi-file', to: '/secure/merchantDocuments' },
                    { label: 'Merchant Photos', icon: 'pi pi-fw pi-images', to: '/secure/merchantPhotos' },
