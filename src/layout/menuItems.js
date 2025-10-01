@@ -41,7 +41,7 @@
         
         {
             label: "Pre-Registration Merchant  & Marketplace",
-            owner:[2],
+            owner:[2,5],
             items: [
                   /*
                   { label: 'e-Menu', icon: 'pi pi-fw pi-qrcode', to: '/secure/products', owner:[2] },
@@ -55,7 +55,7 @@
             ],
         }, {
             label: "MPay Merchant ",
-            owner:[2],
+            owner:[2,5],
             items: [
                     { label: 'Enrollment documents ', icon: 'pi pi-fw pi-file', to: '/secure/mpayDocs', owner:[2] },
                     //{ label: 'usersTable', icon: 'pi pi-fw pi-id-card', to: '/secure/users' },
