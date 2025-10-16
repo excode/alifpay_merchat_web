@@ -70,7 +70,7 @@ const uploadDialog = ref(false);
     const showUploadDialog = (e,data,dbColName,title,accept="image/*") => {
         e.stopPropagation();
         merchantDocuments.value={ ...data };
-        let uploadData =  {url:config.serverURIMer,dbColName:title,accept:accept}
+        let uploadData =  {url:config.serverURIMer,dbColName:dbColName,title:title,accept:accept}
         uploadInfo.value = uploadData;
         uploadDialog.value = true;
         
