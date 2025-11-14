@@ -68,7 +68,7 @@ const router = createRouter({
             component: () => import('@/views/pages/auth/Register.vue')
         },
          {
-            path: '/crop/reg/:referby',
+            path: '/cop/reg/:referby',
             name: 'corp.register',
             component: () => import('@/views/pages/auth/CorpRegister.vue')
         },

@@ -56,7 +56,7 @@ const referralUrl = computed(() => `https://web.alifpay.com.my/#/reg/${userInfo.
 
 const referralUrl2 = computed(() => {
 
-    return `https://web.alifpay.com.my/#/crop/reg/${userInfo.value.username}`;
+    return `https://web.alifpay.com.my/#/cop/reg/${userInfo.value.username}`;
 
 });
 
