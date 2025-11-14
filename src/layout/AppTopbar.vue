@@ -70,7 +70,7 @@ const getUserType=(type)=>{
     }else if(type==3){
          userTypeName="FC: FinTech Community"
      }else if(type==5){
-         userTypeName="F-CROP: FinTech Co-Operative"
+         userTypeName="F-COP: FinTech Co-Operative"
     }
     return userTypeName;
 }
