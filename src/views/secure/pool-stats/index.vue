@@ -18,11 +18,16 @@ onMounted(async () => {
 
 // Format currency
 const formatCurrency = (amount) => {
+    amount=amount/50
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2
   }).format(amount)
+}
+const formatNumber = (amount) => {
+    return Math.floor(amount)
+  
 }
 
 // Get rank badge color
@@ -92,9 +97,9 @@ const recentAchievements = computed(() => {
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-        Pool Bonus Dashboard
+         Pool reward   Dashboard
       </h1>
-      <p class="text-gray-600">Track your achievements and top performers in real-time</p>
+      <p class="text-gray-800">The scoreboard is early stage and need validation. Track your achievements and top performers in real-time</p>
     </div>
 
     <div v-if="loading" class="flex items-center justify-center min-h-[400px]">
@@ -123,7 +128,7 @@ const recentAchievements = computed(() => {
             <div class="text-3xl font-bold text-gray-900 mb-2">
               {{ formatCurrency(stats?.my?.totalAmount || 0) }}
             </div>
-            <p class="text-sm text-gray-600">Total Bonus Earned</p>
+            <p class="text-sm text-gray-600">Total Point Earned</p>
           </div>
 
           <div class="flex items-center justify-between pt-4 border-t border-blue-200">
@@ -138,11 +143,11 @@ const recentAchievements = computed(() => {
           </div>
         </div>
 
-        <!-- Total Pool Bonus Card -->
+        <!-- Total Pool Point Card -->
         <div class="bg-gradient-to-r from-green-50 to-emerald-100 border border-green-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
           <div class="flex items-center justify-between mb-6">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">Total Pool Bonus</h3>
+              <h3 class="text-lg font-semibold text-gray-900">Total Pool Point</h3>
               <p class="text-sm text-gray-600">Community Achievement</p>
             </div>
             <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-full shadow-md">
@@ -348,7 +353,7 @@ const recentAchievements = computed(() => {
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-2xl font-bold text-gray-900">Top Performers Leaderboard</h2>
-              <p class="text-gray-600">Ranking of highest bonus earners this period</p>
+              <p class="text-gray-600">Ranking of highest Point earners this period</p>
             </div>
             <div class="flex items-center space-x-2">
               <button 
@@ -372,7 +377,7 @@ const recentAchievements = computed(() => {
               <tr>
                 <th class="py-4 px-6 text-left text-sm font-semibold text-gray-900">Rank</th>
                 <th class="py-4 px-6 text-left text-sm font-semibold text-gray-900">Username</th>
-                <th class="py-4 px-6 text-left text-sm font-semibold text-gray-900">Total Bonus</th>
+                <th class="py-4 px-6 text-left text-sm font-semibold text-gray-900">Total Point</th>
                 <th class="py-4 px-6 text-left text-sm font-semibold text-gray-900">Status</th>
               </tr>
             </thead>
@@ -429,9 +434,9 @@ const recentAchievements = computed(() => {
                 </td>
                 <td class="py-4 px-6">
                   <div class="font-bold text-lg text-gray-900">
-                    {{ formatCurrency(user.totalAmount) }}
+                    {{ formatNumber(user.totalAmount/50) }}
                   </div>
-                  <div class="text-sm text-gray-500">Bonus earned</div>
+                  <div class="text-sm text-gray-500">Point earned</div>
                 </td>
                 <td class="py-4 px-6">
                   <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
