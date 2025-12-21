@@ -36,6 +36,7 @@
                     { label: 'Hierarchy', icon: 'pi pi-fw pi-sliders-v', to: '/secure/referral' },
                     { label: 'My Reward', icon: 'pi pi-fw pi-gift', to: '/secure/reward' },
                     { label: 'My Redeem', icon: 'pi pi-fw pi-money-bill', to: '/secure/redeem' },
+                    { label: 'Pool Reward', icon: 'pi pi-fw pi-chart-line', to: '/secure/pool-stats' },
                 ],
         },
         

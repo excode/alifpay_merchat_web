@@ -12,7 +12,8 @@ import { defineStore } from 'pinia'
       page:0,
       loading:false,
       curdLoading:false,
-      reward : {}
+      reward : {},
+      stats:{}
       }),
       
       actions: {
@@ -32,6 +33,21 @@ import { defineStore } from 'pinia'
                 this.totalpages = 1
                 this.page = 1
               }
+              this.loading = false
+              this.curdLoading = false
+              this.error = null
+            } else {
+            
+                this.error = listError(response["errors"]) 
+                this.loading = false
+                this.curdLoading = false
+            }
+          },
+          async getPoolStats(request = {}) {
+            this.loading =true 
+            const response = await getData( 'stats/reward',request,true,config.refServerURI);
+            if(response["errors"]==undefined) {
+              this.stats = response
               this.loading = false
               this.curdLoading = false
               this.error = null

@@ -247,6 +247,11 @@
                 path: '/secure/transactions/:id',
                 name: 'transactions.details',
                 component: () => import('@/views/secure/transactions/details.vue')
+            },
+             {
+                path: '/secure/pool-stats',
+                name: 'pool.details',
+                component: () => import('@/views/secure/pool-stats/index.vue')
             }
             //END NEXT
 
