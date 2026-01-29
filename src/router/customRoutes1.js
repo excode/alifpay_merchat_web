@@ -198,6 +198,28 @@
                 path: '/secure/transaction/:id',
                 name: 'transaction.details',
                 component: () => import('@/views/secure/transaction/details.vue')
+            },
+            {
+                path: '/secure/sim_mapping',
+                name: 'sim-mapping',
+                component: () => import('@/views/secure/sim_mapping/index.vue')
+            },
+            {
+                path: '/secure/sim_mapping/:id',
+                name: 'sim-mapping.details',
+                component: () => import('@/views/secure/sim_mapping/details.vue')
+            }
+            ,
+
+            {
+                path: '/secure/topups',
+                name: 'topups',
+                component: () => import('@/views/secure/topups/index.vue')
+            },
+            {
+                path: '/secure/topups/:id',
+                name: 'topups.details',
+                component: () => import('@/views/secure/topups/details.vue')
             }
             
     ]

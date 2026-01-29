@@ -39,6 +39,16 @@
                    { label: 'Pool Reward', icon: 'pi pi-fw pi-chart-line', to: '/secure/pool-stats' },
                 ],
         },
+         {
+            label: "Telco Network",
+            owner:[2,3,5],
+                items: [
+                
+                    { label: 'Sim Mapping', icon: 'pi pi-fw pi-mobile', to: '/secure/sim_mapping' },
+                    { label: 'My Topups', icon: 'pi pi-fw pi-cart-plus', to: '/secure/topups' },
+                    
+                ],
+        },
         
         {
             label: "Pre-Registration Merchant  & Marketplace",
