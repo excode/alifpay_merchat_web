@@ -174,6 +174,26 @@
                                         optionLabel="snumber"
                                         @complete="searchSims"
                                         :suggestions="sugsimss"
+                                        placeholder="Search Serial number"
+                                        class="p-column-filter w-full"
+                                        dropdown
+                                        @item-select="filterCallback"
+                                    />
+                                </template>
+                            </Column>
+                               <Column field="simNumber" header="SIM Number" sortable>
+                                <template #body="{ data }">
+                                    <div class="flex align-items-center gap-2">
+                                        <i class="pi pi-sim-card text-primary"></i>
+                                        <span class="font-medium">{{ data.simNumber || 'N/A' }}</span>
+                                    </div>
+                                </template>
+                                <template #filter="{ filterModel, filterCallback }">
+                                    <AutoComplete 
+                                        v-model="filterModel.value"
+                                        optionLabel="simNumber"
+                                        @complete="searchSims"
+                                        :suggestions="sugsimss"
                                         placeholder="Search SIM number"
                                         class="p-column-filter w-full"
                                         dropdown
@@ -233,7 +253,7 @@
                     >
                         <div class="field mb-5">
                             <label for="snumber" class="font-medium text-900 mb-2 block">
-                                SIM Number <span class="text-red-500">*</span>
+                                Serial Number <span class="text-red-500">*</span>
                             </label>
                             <AutoComplete 
                                 id="snumber"
@@ -241,7 +261,7 @@
                                 :suggestions="sugsimss"
                                 @complete="searchSims"
                                 optionLabel="snumber"
-                                placeholder="Type to search SIM numbers"
+                                placeholder="Serial numbers"
                                 class="w-full"
                                 :class="{ 'p-invalid': submitted && !sim_mapping.snumber }"
                                 dropdown
@@ -253,8 +273,36 @@
                                     </div>
                                 </template>
                             </AutoComplete>
+
                             <small v-if="submitted && !sim_mapping.snumber" class="p-error">
-                                SIM Number is required
+                                SIM Number or Serial is required
+                            </small>
+                        </div>
+                        <div class="field mb-5">
+                            <label for="snumber" class="font-medium text-900 mb-2 block">
+                            Mobile Number <span class="text-red-500"></span>
+                            </label>
+                            <AutoComplete 
+                                id="simNumber"
+                                v-model="sim_mapping.simNumber"
+                                :suggestions="sugsimss"
+                                @complete="searchSims"
+                                optionLabel="Sim Number"
+                                placeholder="Mobile numbers 01......."
+                                class="w-full"
+                                :class="{ 'p-invalid': submitted && !sim_mapping.simNumber }"
+                                dropdown
+                            >
+                                <template #item="slotProps">
+                                    <div class="flex align-items-center">
+                                        <i class="pi pi-sim-card mr-2 text-primary"></i>
+                                        <span>{{ slotProps.option.simNumber }}</span>
+                                    </div>
+                                </template>
+                            </AutoComplete>
+
+                            <small v-if="submitted && !sim_mapping.snumber" class="p-error">
+                                Mobile Number or Serial is required
                             </small>
                         </div>
 
@@ -386,7 +434,7 @@ const row = ref(10);
 
 // Validation
 const validation = [
-    { id: 'snumber', type: validate.text, required: true, label: 'SIM Number' }
+  
 ];
 
 onBeforeMount(() => {
@@ -403,13 +451,14 @@ const initFilters = () => {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         createBy: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
         snumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.IN }] },
+        simNumber: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.IN }] },
         createAt: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }
     };
 };
 
 // CRUD Operations
 const openNew = () => {
-    sim_mapping.value = { snumber: null };
+    sim_mapping.value = { snumber: null,simNumber:null };
     submitted.value = false;
     sim_mappingDialog.value = true;
 };
