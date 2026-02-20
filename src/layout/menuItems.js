@@ -40,8 +40,19 @@
                 ],
         },
          {
+            label: "AlifPay Rewards",
+            owner:[4],
+                items: [
+                
+                  
+                    { label: 'My Reward', icon: 'pi pi-fw pi-gift', to: '/secure/reward' },
+                    { label: 'My Redeem', icon: 'pi pi-fw pi-money-bill', to: '/secure/redeem' },
+            
+                ],
+        },
+         {
             label: "Telco Network",
-            owner:[2,3,5],
+            owner:[2,3,5,4],
                 items: [
                 
                     { label: 'Sim Mapping', icon: 'pi pi-fw pi-mobile', to: '/secure/sim_mapping' },
