@@ -107,6 +107,36 @@ import { defineStore } from 'pinia'
             this.curdLoading =false 
           }
           },
+          async addTransfer (request = {}) {
+            this.curdLoading =true 
+            const response = await  postData( '/redeem-transfer/alifpay', request ,true,config.refServerURI)
+            if(response["errors"]==undefined || response["errors"]==null) {
+                var newID= response.id
+                this.redeems.unshift({...request,id:newID,_id:newID})
+                this.loading = false
+                this.curdLoading = false
+                this.error = null
+          } else{
+            this.error = listError(response["errors"]) 
+            this.loading = false
+            this.curdLoading =false 
+          }
+          },
+           async confirmTransfer (request = {}) {
+            this.curdLoading =true 
+            const response = await  postData( '/redeem-transfer/confirm', request ,true,config.refServerURI)
+            if(response["errors"]==undefined || response["errors"]==null) {
+                var newID= response.id
+                this.redeems.unshift({...request,id:newID,_id:newID})
+                this.loading = false
+                this.curdLoading = false
+                this.error = null
+          } else{
+            this.error = listError(response["errors"]) 
+            this.loading = false
+            this.curdLoading =false 
+          }
+          },
           async  updateRedeem (request = {}) {
             const id = request.id
             delete request.id

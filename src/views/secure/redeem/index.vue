@@ -15,6 +15,7 @@ import { useHierarchyStore } from '@/stores/modules/Hierarchy';
     getRedeem,
     updateRedeemValue ,
     addRedeem,
+    addTransfer,
     updateRedeem,
     deleteRedeem
     } = useRedeemStore()
@@ -23,6 +24,7 @@ const {hierarchys} = storeToRefs(useHierarchyStore())
 const toast = useToast();
 const { contextPath } = useLayout();
 const redeemDialog = ref(false);
+const transferDialog = ref(false);
 const deleteRedeemDialog = ref(false);
 const deleteRedeemsDialog = ref(false);
 const redeem = ref({});
@@ -87,6 +89,10 @@ const hideDialog = () => {
     redeemDialog.value = false;
     submitted.value = false;
 };
+const hideTDialog = () => {
+    transferDialog.value = false;
+    submitted.value = false;
+};
 
 const saveRedeem = async() => {
     submitted.value = true;
@@ -115,6 +121,25 @@ const saveRedeem = async() => {
         toast.add({ severity: 'error', summary: 'Error', detail: validationErrors, life: 5000 })
     }
 };
+const saveTransferRedeem = async() => {
+    submitted.value = true;
+    const validationErrors=validateForm(redeem.value,validation)
+    if (validationErrors.length==0) {
+    
+       
+            await addTransfer(redeem.value)
+            if(error.value==undefined || error.value==null){
+                toast.add({ severity: 'success', summary: 'Successful', detail: 'Transfer Done', life: 3000 });
+            }else{
+                toast.add({ severity: 'error', summary: 'Error', detail: error.value, life: 3000 });
+            }
+        
+        transferDialog.value = false;
+        redeem.value = {};
+    }else{
+        toast.add({ severity: 'error', summary: 'Error', detail: validationErrors, life: 5000 })
+    }
+};
 
 const editRedeem = (editRedeem) => {
     
@@ -126,6 +151,27 @@ const confirmDeleteRedeem = (editRedeem) => {
     redeem.value = { ...editRedeem };
     deleteRedeemDialog.value = true;
 };
+const openTransferRedeem = () => {
+    let emptyRedeem = {
+        destination_username:'',
+        productid:null,
+        redeemproductid:null,
+        quantity:0,
+        unitprice:1,
+        total:1,
+        sellerNumber:'ss'
+    };
+    redeem.value = emptyRedeem;
+    
+    redeem.value = { ...editRedeem };
+    transferDialog.value = true;
+};
+
+const confirmTransferRedeem = (editRedeem) => {
+    redeem.value = { ...editRedeem };
+    transferDialog.value = true;
+};
+
 
 const delRedeem = async() => {
     await deleteRedeem(redeem.value.id);
@@ -229,6 +275,10 @@ const getNewData =async(e,type=0)=>{
                             <template v-slot:start>
                                 <div class="my-2">
                                     <Button label="Redeem to Wallet" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
+                                   
+                                </div>
+                                <div class="my-2">
+                                    <Button label="Trasnfer to account" icon="pi pi-send" class="p-button-warning mr-2" @click="openTransferRedeem" />
                                    
                                 </div>
                             </template>
@@ -403,6 +453,32 @@ const getNewData =async(e,type=0)=>{
                             <template #footer>
                                 <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
                                 <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveRedeem" />
+                            </template>
+                        </Dialog>
+                        <Dialog v-model:visible="transferDialog" :style="{ width: '450px' }" header="Transfer to  other AlifPay Username" :modal="true" class="p-fluid">
+                             <Message severity="warn" :closable="false" class="mb-3">
+        Please verify the destination username carefully. Transfers cannot be reversed, cancelled, or refunded once completed.
+    </Message>
+                   <div class="field">
+        <label htmlFor="quantity">Destination Username</label>
+         <InputText id="destination_username" v-model="redeem.destination_username"    />
+    </div>
+                      
+   
+    <div class="field">
+        <label htmlFor="quantity">Amount to Transfer</label>
+         <InputNumber id="quantity" v-model="redeem.quantity"   mode="currency" currency="MYR"  />
+    </div>
+            
+
+    
+            
+
+    
+            
+                            <template #footer>
+                                <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideTDialog" />
+                                <Button label="Transfer" icon="pi pi-send" class="p-button-text" @click="saveTransferRedeem" />
                             </template>
                         </Dialog>
         
