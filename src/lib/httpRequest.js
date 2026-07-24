@@ -11,7 +11,7 @@ export const getData = async(path,request={},secured=true,_url="") => {
         'Content-Type': 'application/json'
       };
       if(_url!=""){
-        headers["project_code"] =project_code;
+        headers["x-project-code"] =project_code;
       }
       if(secured){
         const ldata = localStorage.getItem('users')
@@ -54,7 +54,7 @@ export const postData = async(path,postdata,secured=true,_url="") => {
       
     };
     if(_url!=""){
-      headers["project_code"] =project_code;
+      headers["x-project-code"] =project_code;
     }
     if(secured){
       const ldata = localStorage.getItem('users')
@@ -90,7 +90,7 @@ export const patchData = async(path,postdata,secured=true,_url="") => {
       
     };
     if(_url!=""){
-      headers["project_code"] =project_code;
+      headers["x-project-code"] =project_code;
     }
     if(secured){
       const ldata = localStorage.getItem('users')
@@ -130,7 +130,7 @@ export const deleteData = async(path,_url="") => {
         "Authorization":'Bearer ' + token
       };
       if(_url!=""){
-        headers["project_code"] =project_code;
+        headers["x-project-code"] =project_code;
       }
       headers["Authorization"] ='Bearer ' + token;
     try {
